@@ -11,7 +11,7 @@ export default function Home() {
       </Link>
       <div>
         <span className="text-textPoint font-bold text-4xl absolute left-12 top-32">대충</span>
-        <img src=""/>
+        <img src="대충.png"/>
       </div>
       
     </div>

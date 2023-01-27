@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 
@@ -20,24 +20,25 @@ const ErrorSpan = tw.span`
     text-xs 
     p-2
 `
-const Img = tw.div`
+const Img = tw.img`
     h-40
     w-40
-    bg-white
     rounded-full
+    cursor-pointer
 `
+
 
 export default function Profile() {
     const {register, handleSubmit, formState:{errors}} = useForm();
-    const {majorNum, setMajorNum} = useState(1);
+    const {majorNum, setMajorNum} = useState(2);
+    console.log(majorNum)
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
     }
 
-    const onClick = () => {
-        if(majorNum==!3){
-            setMajorNum(prev=>prev+1)
-        }
+    const onClick = (e) => {
+        console.log(e)
+        addEventListener()
     }
     return <div className="lg:h-screen lg:flex">
         <div className=" m-10 lg:flex-grow">
@@ -71,29 +72,38 @@ export default function Profile() {
                     </InputField>
                     <ErrorSpan>{errors?.stuId?.message}</ErrorSpan>
                 </InputWrap>
-                {}
                 <InputWrap>
                     <InputField>
                         <span>제1전공*:</span>
-                        <Input type="text" {...register("major", {required:"전공을 입력해주세요"})}/>
+                        <Input type="text" {...register(`stMajor`, {required:"전공을 입력해주세요"})}/>
                         
                     </InputField>
-                    <ErrorSpan>{errors?.major?.message}</ErrorSpan>
+                    <ErrorSpan>{errors?.stMajor?.message}</ErrorSpan>
+                    
                 </InputWrap>
-                <button className="">+</button>
+                <InputWrap>
+                    <InputField>
+                        <span>제2전공:</span>
+                        <Input type="text" {...register(`ndMajor`)}/>
+                        
+                    </InputField>
+                    <ErrorSpan>{errors?.ndMajor?.message}</ErrorSpan>
+                    
+                </InputWrap>
             </form>
+            <div onClick={onClick} className="mx-20 text-right cursor-pointer">+</div>
         </div>
         <div className="bg-bgPoint lg:flex-grow">
             <div className="p-10 text-3xl font-bold text-gray-500">
                 <span>프로필을 선택하세요 :&#41;</span>
             </div>
             <div className="p-10 gap-8 grid grid-cols-3 justify-items-center">
-                <Img/>
-                <Img/>
-                <Img/>
-                <Img/>
-                <Img/>
-                <Img/>
+                <Img src="profile_1.png"/>
+                <Img src="profile_2.png"/>
+                <Img src="profile_3.png"/>
+                <Img src="profile_4.png"/>
+                <Img src="profile_5.png"/>
+                <Img src="profile_6.png"/>
             </div>
         </div>
     </div>
