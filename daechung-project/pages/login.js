@@ -10,9 +10,9 @@ export default function Login(){
                 kakao.API.request({
                     url: '/v2/user/me', // 사용자 정보 가져오기
                     success: (res) => { 
-                        // 로그인 성공할 경우 정보 확인 후 /profile페이지로 push
+                        // 로그인 성공할 경우 정보 확인 
                         console.log(res);
-                        Router.push('/profile')
+                        Router.push('/profile') // 이미 가입한 유저라면 /profile
                     },
                     fail: (error) => {
                         console.log(error);

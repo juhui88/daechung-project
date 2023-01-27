@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 
@@ -28,20 +29,23 @@ const Img = tw.div`
 
 export default function Profile() {
     const {register, handleSubmit, formState:{errors}} = useForm();
+    const {majorNum, setMajorNum} = useState(1);
     const onValid = (data) => {
-        console.log(data);
+        console.log(data); // 나중에 여기서 백엔드로 옮기기
     }
 
     const onClick = () => {
-        
+        if(majorNum==!3){
+            setMajorNum(prev=>prev+1)
+        }
     }
-    return <div className="">
-        <div className=" m-10">
+    return <div className="lg:h-screen lg:flex">
+        <div className=" m-10 lg:flex-grow">
             <div className="mb-7">
                 <span className="text-3xl font-bold text-gray-500">회원 정보 입력</span>
             </div>
             
-            <form className="grid gap-10 text-gray-500" onSubmit = {handleSubmit(onValid)}>
+            <form className="grid gap-10 xl text-gray-500" onSubmit = {handleSubmit(onValid)}>
                 <button type="submit" className="absolute top-3 right-3 font-semibold ">시작하기➜</button>
                 <InputWrap>
                     <InputField>
@@ -67,6 +71,7 @@ export default function Profile() {
                     </InputField>
                     <ErrorSpan>{errors?.stuId?.message}</ErrorSpan>
                 </InputWrap>
+                {}
                 <InputWrap>
                     <InputField>
                         <span>제1전공*:</span>
@@ -75,17 +80,10 @@ export default function Profile() {
                     </InputField>
                     <ErrorSpan>{errors?.major?.message}</ErrorSpan>
                 </InputWrap>
-                <InputWrap>
-                    <InputField>
-                        <span>제2전공*:</span>
-                        <Input type="text" {...register("major")}/>
-                        
-                    </InputField>
-                </InputWrap>
                 <button className="">+</button>
             </form>
         </div>
-        <div className="bg-bgPoint">
+        <div className="bg-bgPoint lg:flex-grow">
             <div className="p-10 text-3xl font-bold text-gray-500">
                 <span>프로필을 선택하세요 :&#41;</span>
             </div>
