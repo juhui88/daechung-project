@@ -1,45 +1,102 @@
 import { useForm } from "react-hook-form";
+import tw from "tailwind-styled-components";
+
+const InputWrap = tw.div`
+    mx-20
+`
+const InputField = tw.div`
+    border-2
+    shadow-md
+    font-semibold
+    p-3
+`
+const Input = tw.input`
+    focus:outline-none
+    w-4/5
+    ml-1
+`
+const ErrorSpan = tw.span`
+    text-xs 
+    p-2
+`
+const Img = tw.div`
+    h-40
+    w-40
+    bg-white
+    rounded-full
+`
 
 export default function Profile() {
     const {register, handleSubmit, formState:{errors}} = useForm();
     const onValid = (data) => {
         console.log(data);
     }
-    return <div className="flex w-full h-screen">
+
+    const onClick = () => {
+        
+    }
+    return <div className="">
         <div className=" m-10">
             <div className="mb-7">
                 <span className="text-3xl font-bold text-gray-500">회원 정보 입력</span>
             </div>
             
-            <form className="grid gap-2" onSubmit = {handleSubmit(onValid)}>
-                <div className=" border-2 border-blue-500">
-                    <span>이름*:</span>
-                    <input  {...register("name", {required:"이름을 입력해주세요"})}/> 
+            <form className="grid gap-10 text-gray-500" onSubmit = {handleSubmit(onValid)}>
+                <button type="submit" className="absolute top-3 right-3 font-semibold ">시작하기➜</button>
+                <InputWrap>
+                    <InputField>
+                        <span>이름*:</span>
+                        <Input type="text" {...register("name", {required:"이름을 입력해주세요"})}/>    
+                    </InputField>
+                     
+                    <ErrorSpan>{errors?.name?.message}</ErrorSpan>
+                </InputWrap>
+                <InputWrap>
+                    <InputField>
+                        <span>학교*:</span>
+                        <Input type="text" {...register("uniName", {required:"학교명을 입력해주세요"})}/>
+                        
+                    </InputField>
+                    <ErrorSpan>{errors?.uniName?.message}</ErrorSpan>
+                </InputWrap>
+                <InputWrap>
+                    <InputField>
+                        <span>학번*:</span>
+                        <Input type="text" {...register("stuId", {required:"학번을  입력해주세요"})}/>
                     
-                    <span>{errors?.name?.message}</span>
-                </div>
-                <div>
-                    <span>학교*:</span>
-                    <input {...register("uniName", {required:"학교명을 입력해주세요"})}/>
-                    <span>{errors?.uniName?.message}</span>
-                </div>
-                <div>
-                    <span>학번*:</span>
-                    <input {...register("stuID", {required:"학번을 입력해주세요"})}/>
-                    <span>{errors?.stuId?.message}</span>
-                </div>
-                <div>
-                    <span>제1전공*:</span>
-                    <input {...register("major", {required:"전공을 입력해주세요"})}/>
-                    <span>{errors?.major?.message}</span>
-                </div>
-                <div>
-                    <button>시작하기➜</button>
-                </div>
+                    </InputField>
+                    <ErrorSpan>{errors?.stuId?.message}</ErrorSpan>
+                </InputWrap>
+                <InputWrap>
+                    <InputField>
+                        <span>제1전공*:</span>
+                        <Input type="text" {...register("major", {required:"전공을 입력해주세요"})}/>
+                        
+                    </InputField>
+                    <ErrorSpan>{errors?.major?.message}</ErrorSpan>
+                </InputWrap>
+                <InputWrap>
+                    <InputField>
+                        <span>제2전공*:</span>
+                        <Input type="text" {...register("major")}/>
+                        
+                    </InputField>
+                </InputWrap>
+                <button className="">+</button>
             </form>
         </div>
-        <div className="bg-bgPoint flex-grow">
-            dfd
+        <div className="bg-bgPoint">
+            <div className="p-10 text-3xl font-bold text-gray-500">
+                <span>프로필을 선택하세요 :&#41;</span>
+            </div>
+            <div className="p-10 gap-8 grid grid-cols-3 justify-items-center">
+                <Img/>
+                <Img/>
+                <Img/>
+                <Img/>
+                <Img/>
+                <Img/>
+            </div>
         </div>
     </div>
 }
