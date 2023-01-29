@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         bgPoint: "#E2E9F1",
         textPoint: "#4978AE",
-        itemBg : "#F5F5F5"
+        itemBg : "#F5F5F5",
       }
     },
   },
