@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
@@ -41,15 +42,16 @@ export default function Profile() {
     console.log(majorNum)
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
+        Router.push('homepage')
     }
 
     const onClickThird = () => {
         if(!isThirdMajor){
             setIsThirdMajor(true)
         }
-        if(profileImgNum===0){
-
-        }
+    }
+    const onClickProImg = (num) => {
+        setProfileImgNum(num)
     }
     return <div className="lg:h-screen lg:flex">
         <div className=" m-10 lg:flex-grow">
