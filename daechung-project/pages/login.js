@@ -12,7 +12,7 @@ export default function Login(){
                     success: (res) => { 
                         // 로그인 성공할 경우 정보 확인 
                         console.log(res);
-                        Router.push('/profile') // 이미 가입한 유저라면 /profile
+                        Router.push('/join') // 가입하지 않은 유저라면
                     },
                     fail: (error) => {
                         console.log(error);
