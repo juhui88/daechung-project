@@ -120,13 +120,7 @@ export default function CalendarBar() {
   }
 
 
-  const plus12Year = () => {
-    setSelectedYear(selectedYear + 12)
-  }
-
-  const minus12Year = () => {
-    setSelectedYear(selectedYear - 12)
-  }
+  const handleSelectedYear = (num) => num ? setSelectedYear(selectedYear + 12): setSelectedYear(selectedYear - 12);
   
   return (
     <div className="select-none">
@@ -187,12 +181,12 @@ export default function CalendarBar() {
         {yearClicked ? 
         <div className="absolute bg-itemBg shadow-2xl top-12 p-3 z-20 rounded-md">
           <div className="flex justify-end space-x-1 pb-2">
-          <button onClick={()=>minus12Year(Number(date.clone().format('YYYY')))}>
+          <button onClick={()=>handleSelectedYear(0)}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
             </svg>
           </button>
-          <button onClick={()=>plus12Year(Number(date.clone().format('YYYY')))}>
+          <button onClick={()=>handleSelectedYear(1)}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
