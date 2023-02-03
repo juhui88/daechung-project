@@ -92,16 +92,14 @@ export default function NavBar() {
                     <PlusBtn>+</PlusBtn>
                     <span className="pl-1">1학년 1학기</span>
                 </div>
-                <Scate >
+                {[...Array(2).fill(1).map((_,i) => (
+                <Scate key = {i}>
                     <span>
                         기업인수합병
                     </span>
-                </Scate>
-                <Scate >
-                    <span>
-                        기업인수합병
-                    </span>
-                </Scate>
+                </Scate>    
+                ))]}
+                
             </Mcate>
             
             <Mcate className="">
@@ -109,11 +107,13 @@ export default function NavBar() {
                     <PlusBtn>+</PlusBtn>        
                     <span className="pl-1">1학년 2학기</span>
                 </div>
-                <Scate className=" ">
+                {[...Array(2).fill(1).map((_,i) => (
+                <Scate key = {i}>
                     <span>
                         기업인수합병
                     </span>
-                </Scate>
+                </Scate>    
+                ))]}
             </Mcate>    
         </div>
         
