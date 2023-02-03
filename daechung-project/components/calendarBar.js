@@ -125,7 +125,7 @@ export default function CalendarBar() {
   return (
     <div className="select-none">
     {yearClicked ?<div className="fixed top-0 bottom-0 z-10 w-screen h-srceen opacity-0" onClick={onClickYear}></div> : null}
-    <div className="w-64 absolute top-20 right-0 bg-white">
+    <div className="w-64 bg-white">
       <span className="text-xl pl-3">Calendar</span>
       <div className="mt-3 pl-3">
       <div className="flex space-x-3 text-gray-500">
@@ -164,7 +164,7 @@ export default function CalendarBar() {
             </svg>
           </span>
           <span onClick={() => handleYear(1)}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-4 h-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
             </svg>
           </span>
