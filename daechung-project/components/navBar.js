@@ -81,8 +81,8 @@ export default function NavBar() {
     
     return <div className="relative w-64 h-full">
         <div className="grid gap-2">
-        <Lcate onClick={()=>onClickLcate("교과")}>
-            <div className="">
+        <Lcate>
+            <div className="flex-1" onClick={()=>onClickLcate("교과")}>
                 <PlusBtn >+</PlusBtn>
                 <LCateName>교과</LCateName>
                 
@@ -140,8 +140,8 @@ export default function NavBar() {
         </div>
         
         :null}
-        <Lcate onClick={()=>onClickLcate("비교과")}>
-            <div>
+        <Lcate>
+            <div className="flex-1" onClick={()=>onClickLcate("비교과")}>
                 <PlusBtn>+</PlusBtn> 
                 <LCateName>비교과</LCateName>
                    
@@ -180,8 +180,8 @@ export default function NavBar() {
         </div>
         
         :null}
-        <Lcate onClick={()=>onClickLcate("기타")}>
-            <div>
+        <Lcate>
+            <div className="flex-1" onClick={()=>onClickLcate("기타")}>
                 <PlusBtn>+</PlusBtn>
                 <LCateName>기타</LCateName>
                 
