@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import { useState } from "react"
 import tw from "tailwind-styled-components"
 
@@ -47,6 +48,7 @@ const Scate = tw.div`
 `
 
 export default function NavBar() {
+    const router = useRouter();
     const [lCateBool, setLCateBool] = useState([
         {
             index:0,
@@ -73,10 +75,13 @@ export default function NavBar() {
     const handleMenu = () => {
         setMenuIsOpen(prev => !prev)
     }
+    const onClickLcate = (name) => {
+        router.push(`/notes/${name}`);
+    }
     
     return <div className="relative w-64 h-full">
         <div className="grid gap-2">
-        <Lcate>
+        <Lcate onClick={()=>onClickLcate("교과")}>
             <div className="">
                 <PlusBtn >+</PlusBtn>
                 <LCateName>교과</LCateName>
@@ -135,7 +140,7 @@ export default function NavBar() {
         </div>
         
         :null}
-        <Lcate>
+        <Lcate onClick={()=>onClickLcate("비교과")}>
             <div>
                 <PlusBtn>+</PlusBtn> 
                 <LCateName>비교과</LCateName>
@@ -175,7 +180,7 @@ export default function NavBar() {
         </div>
         
         :null}
-        <Lcate>
+        <Lcate onClick={()=>onClickLcate("기타")}>
             <div>
                 <PlusBtn>+</PlusBtn>
                 <LCateName>기타</LCateName>
