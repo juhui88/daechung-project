@@ -5,7 +5,7 @@ import NoteCreate from "@/components/noteCreate";
 export default function LCateDetail({cate}) {
     console.log(cate);
     return <Layout>
-        <div className=" pl-8  ">
+        <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
                 {cate.map((c,i)=> i!==cate.length-1 ?
                 <div className="flex items-center font-extrabold text-gray-600 text-lg ">
@@ -21,8 +21,12 @@ export default function LCateDetail({cate}) {
             </div>)}
                 
             </div>
-            <NoteCreate/>
-            <Note/>
+            <div>
+            {cate.length===3 ?<NoteCreate/> :null}
+            
+            <Note/>    
+            </div>
+            
         </div>
         
          

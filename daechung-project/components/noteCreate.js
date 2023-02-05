@@ -1,6 +1,6 @@
 export default function NoteCreate() {
-    return<div className="flex h-28 space-x-3">
-        <label className="border border-gray-400 flex items-center justify-center p-10">
+    return<div className="flex h-32 space-x-3">
+        <label className="border border-gray-400 flex items-center justify-center w-28">
             <span className="font-extrabold text-4xl cursor-pointer text-gray-500 ">+</span>
             <input type="file" className="hidden"/>    
         </label>
