@@ -1,12 +1,15 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import CalendarBar from "./calendarBar";
 import NavBar from "./navBar";
 import Search from "./search";
 
 export default function Layout({children}) {
+    
+    
     return (
     <div className="grid w-srceen h-screen wrap">
-        <div className="col-start-1 col-end-4 row-start-1 row-end-2">
+        <div className="col-start-1 col-end-3 lg:col-end-4 row-start-1 row-end-2">
             <div className=" flex justify-between h-24">
                 <Link href = "/home" className="flex items-end ml-5">
                     <span className=" text-3xl text-gray-700 font-normal">HOME</span>
@@ -21,11 +24,10 @@ export default function Layout({children}) {
         </div>
         
         
-        <div className="col-start-1 col-end-3 row-start-2 row-end-3 ">
+        <div className="col-start-1 col-end-2 row-start-2 row-end-3 ">
             <NavBar/>
         </div>
-        
-        <div className="col-start-3 col-end-4 row-start-2 row-end-3e">
+        <div className="hidden lg:block lg:col-start-3 lg:col-end-4 lg:row-start-2 lg:row-end-3">
             <CalendarBar />
         </div>
         <div className="col-start-2 col-end-3 row-start-2 row-end-3">

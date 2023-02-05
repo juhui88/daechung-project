@@ -123,7 +123,7 @@ export default function CalendarBar() {
   const handleSelectedYear = (num) => num ? setSelectedYear(selectedYear + 12): setSelectedYear(selectedYear - 12);
   
   return (
-    <div className="select-none hidden lg:grid">
+    <div className="select-none">
     {yearClicked ?<div className="fixed top-0 bottom-0 z-10 w-screen h-srceen opacity-0" onClick={onClickYear}></div> : null}
     <div className="w-64 bg-white">
       <span className="text-xl pl-3">Calendar</span>
