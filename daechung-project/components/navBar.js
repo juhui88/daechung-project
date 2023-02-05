@@ -1,6 +1,9 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
+import { useRecoilState } from "recoil"
 import tw from "tailwind-styled-components"
+import { lCateFoldState } from "./atom"
+import MediumCategory from "./navBarItem/mCate"
 
 const Lcate = tw.div`
     bg-itemBg
@@ -17,7 +20,7 @@ const LCateName = tw.span`
     text-textPoint
     pl-1
 `
-const PlusBtn = tw.button`
+export const PlusBtn = tw.button`
     opacity-0
     group-hover:opacity-100
     text-gray-500
@@ -26,49 +29,39 @@ const PlusBtn = tw.button`
     hover:duration-300
     w-3
 `
-const FoldBtn = tw.button`
+export const FoldBtn = tw.button`
     opacity-0
     group-hover:opacity-100
     group-hover:duration-300
     pr-3
     text-gray-600
 `
-const Mcate = tw.div`
-    text-gray-600 
-    grid 
-    gap-2 
-    font-medium
-    pl-1
-    group
-    w-64
-`
+
 const Scate = tw.div`
     pl-8
     w-64
 `
+const mCate = [
+    [
+        "1학년 1학기", "1학년 2학기"
+    ],
+    [
+        "인턴", "동아리"
+    ],
+    [
+        "기타"
+    ]
+]
 
 export default function NavBar() {
     const router = useRouter();
-    const [lCateBool, setLCateBool] = useState([
-        {
-            index:0,
-            bool:true
-        },
-        {
-            index:1,
-            bool:false
-        },
-        {
-            index:2,
-            bool:true
-        }
-    ])
+    const [fold, setfold] = useRecoilState(lCateFoldState);
     const [menuIsOpen , setMenuIsOpen] = useState(false);
     
     const onClickLFold = (i) => {
-        setLCateBool(
-            lCateBool.map(item=>
-                item.index===i ? {...item, bool: !item.bool}: item)
+        setfold(
+            fold.map(item=>
+                item.index===i ? {...item, isFold: !item.isFold}: item)
         )
     }
 
@@ -88,55 +81,12 @@ export default function NavBar() {
                 
             </div>
             <div onClick={()=>onClickLFold(0)} >
-                <FoldBtn>{lCateBool[0].bool ?"⏷" :"⏶" }</FoldBtn>
+                <FoldBtn>{fold[0].isFold ?"⏷" :"⏶" }</FoldBtn>
             </div>
         </Lcate>
-        {lCateBool[0].bool ? 
+        {fold[0].isFold ? 
         <div className="grid gap-2">
-            <Mcate className="">
-                <div className="flex justify-between">
-                    <div>
-                        <PlusBtn>+</PlusBtn>
-                        <span className="pl-1">1학년 1학기</span>
-                    </div>
-                    
-                    <div onClick={()=>(0)}>
-                        
-                    </div>
-                    
-                </div>
-                {
-                [...Array(2).fill(1).map((_,i) => (
-                <Scate key = {i}>
-                    <span>
-                        기업인수합병
-                    </span>
-                </Scate>    
-                ))]}
-                
-            </Mcate>
-            
-            <Mcate className="">
-                <div className=" flex justify-between">
-                    <div>
-                        <PlusBtn>+</PlusBtn>        
-                        <span className="pl-1">1학년 2학기</span>
-                    </div>
-                    <div onClick={()=>(1)}>
-                        
-                    </div>
-                    
-                </div>
-                {
-                [...Array(2).fill(1).map((_,i) => (
-                <Scate key = {i}>
-                    <span>
-                        기업인수합병
-                    </span>
-                </Scate>    
-                ))]}
-                
-            </Mcate>    
+            {mCate[0].map((m,i)=><MediumCategory mCate = {m} lCateIndex = {0} key={i}/>)}
         </div>
         
         :null}
@@ -147,36 +97,13 @@ export default function NavBar() {
                    
             </div>
             <div onClick={()=>onClickLFold(1)} >
-                <FoldBtn>{lCateBool[1].bool ? "⏷":"⏶" }</FoldBtn>
+                <FoldBtn>{fold[1].isFold ? "⏷":"⏶" }</FoldBtn>
             </div>
             
         </Lcate>
-        {lCateBool[1].bool ? 
+        {fold[1].isFold ? 
         <div className="grid gap-2">
-            <Mcate className="">
-                <div className="flex justify-between">
-                    <div>
-                        <PlusBtn>+</PlusBtn>
-                        <span className="pl-1">인턴</span>
-                    </div>
-                </div>
-                {
-                <Scate >
-                    <span>
-                        (주) 무신사 고객관리 인턴 
-                    </span>
-                </Scate>}
-            </Mcate>
-            
-            <Mcate className="">
-                <div className="flex justify-between ">
-                    <div>
-                        <PlusBtn>+</PlusBtn>        
-                        <span className="pl-1">동아리</span>
-                    </div>
-                    
-                </div>
-            </Mcate>    
+              {mCate[1].map((m,i)=><MediumCategory mCate = {m} lCateIndex = {1} key = {i}/>)}
         </div>
         
         :null}
@@ -187,25 +114,20 @@ export default function NavBar() {
                 
             </div>
             <div onClick={()=>onClickLFold(2)} >
-                <FoldBtn>{lCateBool[2].bool ? "⏷":"⏶" }</FoldBtn>
+                <FoldBtn>{fold[2].isFold ? "⏷":"⏶" }</FoldBtn>
             </div>
             
         </Lcate>
-        {lCateBool[2].bool ? 
+        {fold[2].isFold ? 
         <div className="grid gap-2">
-            <Mcate className="">
-                <div className=" ">
-                    <PlusBtn>+</PlusBtn>
-                    <span className="pl-1">기타</span>
-                </div>
-            </Mcate>   
+            {mCate[2].map((m,i)=><MediumCategory mCate = {m} lCateIndex = {2} key = {i}/>)} 
         </div>
         :null}    
         </div>
         
         <button onClick={handleMenu} className="absolute right-3 bottom-10 text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
             </svg>
         </button>
         {
