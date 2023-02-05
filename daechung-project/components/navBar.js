@@ -36,11 +36,6 @@ export const FoldBtn = tw.button`
     pr-3
     text-gray-600
 `
-
-const Scate = tw.div`
-    pl-8
-    w-64
-`
 const mCate = [
     [
         "1학년 1학기", "1학년 2학기"

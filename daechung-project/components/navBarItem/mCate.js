@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil"
 import tw from "tailwind-styled-components"
 import { mCateFoldState } from "../atom"
 import { FoldBtn, PlusBtn } from "../navBar"
+import SmallCategory from "./sCate"
 
 const Mcate = tw.div`
     text-gray-600 
@@ -27,11 +28,11 @@ export default function MediumCategory({mCate, lCateIndex}) {
 
     const index = findIndex();
 
-    const onClickLFold = (i) => {
+    const onClickLFold = (mCate) => {
         setFold(
             fold.map(item=>
                 item.map(item2 =>
-                    item2.index===i ? {...item2, isFold: !item2.isFold}: item2))
+                    item2.name===mCate ? {...item2, isFold: !item2.isFold}: item2))
                 
         )
     }
@@ -42,9 +43,13 @@ export default function MediumCategory({mCate, lCateIndex}) {
             <PlusBtn>+</PlusBtn>
             <span className="pl-1">{mCate}</span>
         </div>
-        <div onClick={()=>onClickLFold(index)}>
+        <div onClick={()=>onClickLFold(mCate)}>
             <FoldBtn>{fold[lCateIndex][index].isFold? "⏷":"⏶" }</FoldBtn>
         </div>
     </div>
+    {fold[lCateIndex][index].isFold ? 
+    <SmallCategory/>
+    : null}
+    
     </Mcate>
 }
