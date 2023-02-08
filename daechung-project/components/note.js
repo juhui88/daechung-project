@@ -3,7 +3,7 @@ export default function Note() {
         <div className="border border-gray-400 flex items-center justify-center w-28">
                
         </div>
-        <div className="border flex-1 border-gray-400 p-1">
+        <div className="border flex-1 border-gray-400 p-1 w-96">
             <span className="text-sm">내용물 </span>
         </div>
     </div>

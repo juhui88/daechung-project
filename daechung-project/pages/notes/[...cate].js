@@ -3,7 +3,7 @@ import Note from "@/components/note";
 import NoteCreate from "@/components/noteCreate";
 
 export default function LCateDetail({cate}) {
-    console.log(cate);
+    
     return <Layout>
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
