@@ -138,9 +138,9 @@ export default function CalendarBar() {
       </div>  
       </div>
       <div className="relative border px-5 pb-5 pt-2  text-sm m-2">
-        <div className="py-2 flex items-center flex-row space-x-1 cursor-pointer"onClick={onClickYear}>
+        <div className="py-2 flex items-center flex-row space-x-1">
           <span className="text-gray-600">{date.clone().format('YYYY')}</span>
-          <span>
+          <span className="cursor-pointer" onClick={onClickYear}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>

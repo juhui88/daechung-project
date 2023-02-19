@@ -35,14 +35,12 @@ const ProfileImg = tw.button`
 
 export default function Profile() {
     const {register, handleSubmit, formState:{errors}} = useForm();
-    const {majorNum, setMajorNum} = useState(2);
     const [isThirdMajor, setIsThirdMajor] = useState(false)
     const [profileImgNum, setProfileImgNum] = useState(0);
 
-    console.log(majorNum)
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
-        Router.push('homepage')
+        Router.push('home')
     }
 
     const onClickThird = () => {
