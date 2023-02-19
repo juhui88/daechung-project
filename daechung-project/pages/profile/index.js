@@ -4,7 +4,9 @@ import ProfileBar from "@/components/profileBar";
 export default function Profile() {
     return (
         <div>
-            <ProfileBar/>
+            <ProfileBar>
+                프로필 보여줄거임
+            </ProfileBar>
         </div>
     )
     
