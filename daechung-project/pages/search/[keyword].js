@@ -1,8 +1,16 @@
 import Layout from "@/components/laytout"
 
 export default function SearchDetail({keyword}) {
-    return <Layout>
+  return <Layout>
+    <div className=" pl-8 pr-28 ">
+      <span className="font-extrabold">
         {keyword}
+      </span>
+      <span>
+        에 대한 검색결과
+      </span>
+      </div>
+        
     </Layout>
 }
 

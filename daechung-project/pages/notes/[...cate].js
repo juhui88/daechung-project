@@ -23,8 +23,7 @@ export default function LCateDetail({cate}) {
             </div>
             <div>
             {cate.length===3 ?<NoteCreate/> :null}
-            
-            <Note/>    
+            {[1,2,3].map(i=><div key = {i}><Note/></div> )}
             </div>
             
         </div>

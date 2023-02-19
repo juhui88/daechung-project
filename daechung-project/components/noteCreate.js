@@ -1,9 +1,11 @@
 import { useState } from "react"
+import { useForm } from "react-hook-form";
 
 export default function NoteCreate() {
     const [ img, setImg ] = useState([])
     const [ previewImg, setPreviewImg ] = useState([])
     const [imgNum, setImgNum] = useState(0);
+    const {register, handleSubmit} = useForm()
 
     const insertImg = (e) => {
         const fileArr = e.target.files;
@@ -30,6 +32,10 @@ export default function NoteCreate() {
     }
     const onClickNumDown = () => {
         setImgNum(prev => prev !== 0 ? prev-1 : prev)
+    }
+
+    const onValid = (data) => {
+        console.log(data)
     }
     return <div className="flex h-32 space-x-5">
         <div className="w-40 relative flex items-center justify-center ">
@@ -61,13 +67,10 @@ export default function NoteCreate() {
             </label>   
 
         </div>
-
-         
+        <form  onSubmit={handleSubmit(onValid)} className="border flex-1 border-gray-400 ">
         
-        
-        <div className="border flex-1 border-gray-400 ">
-        
-            <textarea type="text" className="text-sm h-full p-1 w-full break-all normal-nums" rows = {3}/>
-        </div>
+            <textarea {...register("text")} type="text" className="text-sm h-full p-1 w-full break-all normal-nums" rows={3} />
+            <button className="hidden"/>
+        </form>
     </div>
 }
