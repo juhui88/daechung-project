@@ -5,20 +5,20 @@ import tw from "tailwind-styled-components"
 import { lCateFoldState } from "./atom"
 import MediumCategory from "./navBarItem/mCate"
 
-const Lcate = tw.div`
+export const Lcate = tw.div`
     bg-itemBg
     p-2
-    pl-1
+    pl-2
     w-64
     flex
     justify-between
     group
     hover:cursor-pointer
-`
-const LCateName = tw.span`
     font-semibold
     text-textPoint
-    pl-1
+`
+const LCateName = tw.span`
+    
 `
 export const PlusBtn = tw.button`
     opacity-0
@@ -67,7 +67,7 @@ export default function NavBar() {
         router.push(`/notes/${name}`);
     }
     
-    return <div className="relative w-64 h-full">
+    return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
         <Lcate>
             <div className="flex-1" onClick={()=>onClickLcate("교과")}>
@@ -125,9 +125,8 @@ export default function NavBar() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
             </svg>
         </button>
-        {
-            menuIsOpen ? 
-            <div className="absolute right-3 bottom-16 grid text-sm w-40 border-2 border-gray-200 text-gray-500 divide-y-2">
+        {menuIsOpen ? 
+        <div className="absolute right-3 bottom-16 grid text-sm w-40 border-2 border-gray-200 text-gray-500 divide-y-2">
             <span className="pl-1">순서 바꾸기</span>
             <span className="pl-1">삭제하기</span>
             <span className="pl-1">이름바꾸기</span>
