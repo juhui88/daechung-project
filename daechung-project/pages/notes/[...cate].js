@@ -8,7 +8,7 @@ export default function LCateDetail({cate}) {
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
                 {cate.map((c,i)=> i!==cate.length-1 ?
-                <div className="flex items-center font-extrabold text-gray-600 text-lg ">
+                <div key={i} className="flex items-center font-extrabold text-gray-600 text-lg ">
                     <span>{c}</span>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
@@ -16,7 +16,7 @@ export default function LCateDetail({cate}) {
                         </svg>
                     </span>
                 </div>
-                :<div className="flex font-extrabold text-gray-600 text-lg ">
+                :<div key = {i} className="flex font-extrabold text-gray-600 text-lg ">
                 <span>{c}</span>
             </div>)}
                 
