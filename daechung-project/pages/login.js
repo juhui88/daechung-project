@@ -1,9 +1,12 @@
 import { kakaoInit } from "../components/kakaoInit";
-import  Router  from "next/router";
+import Router from "next/router";
+import Link from "next/link";
 
-export default function Login(){
-    const kakaoLogin = async() => {
-        const kakao = kakaoInit();
+export const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback";
+
+export default function Login() {
+    const kakaoLogin = async () => {
+         /*const kakao = kakaoInit();
         console.log(kakao.Auth.getAccessToken()); 
         kakao.Auth.login({
             success: () => {
@@ -12,7 +15,7 @@ export default function Login(){
                     success: (res) => { 
                         // 로그인 성공할 경우 정보 확인 
                         console.log(res);
-                        Router.push('/join') // 가입하지 않은 유저라면
+                        //Router.push('/join') // 가입하지 않은 유저라면
                     },
                     fail: (error) => {
                         console.log(error);
@@ -22,7 +25,8 @@ export default function Login(){
             fail: (error) => {
                 console.log(error)
             }
-        })
+        }) */
+         Router.push(``) 
     }
 
     return (
@@ -31,14 +35,11 @@ export default function Login(){
             <div className="mb-2">
                 <span className="text-textPoint font-extrabold ">로그인</span>
             </div>
-            <div className="flex border-2 border-gray-300 p-2 cursor-pointer mb-2" onClick={kakaoLogin}>
+            <Link className="flex border-2 border-gray-300 p-2 cursor-pointer mb-2"
+                href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`}>
                 <img className="h-6" src="kakaoLogo.png"/>
-                <span className="mx-auto text-gray-600">카카오톡 계정으로 로그인</span>
-            </div>
-            <div className="py-1 text-sm text-gray-600 flex items-center">
-                <input type="checkbox"/>
-                <span className="">로그인 정보 저장</span>
-            </div>
+                <span className="mx-auto text-gray-600">카카오톡 계정으로 시작하기</span>
+            </Link>
         </div>
         <div className="flex-1 flex flex-col">
             <div className="flex-1"/>
