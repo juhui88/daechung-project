@@ -16,6 +16,7 @@ export default function GetToken() {
             url :"https://kapi.kakao.com/v2/user/me"
         })
         console.log(data);
+        localStorage.setItem("id", data.id)
     }
     
     useEffect(() => {
@@ -28,6 +29,8 @@ export default function GetToken() {
                 
             }).then((res) => {
                 getUser(res.data.access_token)
+                localStorage.setItem("token", res.data.access_token)
+                
                 
             }).catch((err) => { console.log(err) })  
         } catch (err) {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,19 +36,27 @@ const ProfileImg = tw.button`
 
 export default function Profile() {
     const {register, handleSubmit, formState:{errors}} = useForm();
-    const [isThirdMajor, setIsThirdMajor] = useState(false)
     const [profileImgNum, setProfileImgNum] = useState(0);
 
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
+        axios({
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({
+                name: data.name,
+                schoolName:data.uniName,
+                studentNumber:data.stuId,
+                major1:data.major1,
+                major2:data.major2 ? data.major2 : "",
+                profileImgUrl:"",
+            })
+        })
         Router.push('home')
     }
 
-    const onClickThird = () => {
-        if(!isThirdMajor){
-            setIsThirdMajor(true)
-        }
-    }
     const onClickProImg = (num) => {
         setProfileImgNum(num)
     }
@@ -86,7 +95,7 @@ export default function Profile() {
                 <InputWrap>
                     <InputField>
                         <span>제1전공*:</span>
-                        <Input type="text" {...register(`stMajor`, {required:"전공을 입력해주세요"})}/>
+                        <Input type="text" {...register(`major1`, {required:"전공을 입력해주세요"})}/>
                         
                     </InputField>
                     <ErrorSpan>{errors?.stMajor?.message}</ErrorSpan>
@@ -95,23 +104,13 @@ export default function Profile() {
                 <InputWrap>
                     <InputField>
                         <span>제2전공:</span>
-                        <Input type="text" {...register(`ndMajor`)}/>
+                        <Input type="text" {...register(`major2`)}/>
                         
                     </InputField>
                     <ErrorSpan>{errors?.ndMajor?.message}</ErrorSpan>
                     
                 </InputWrap>
-                {isThirdMajor?
-                <InputWrap>
-                    <InputField>
-                        <span>제3전공:</span>
-                        <Input type="text" {...register(`ndMajor`)}/>
-                        
-                    </InputField>
-                    <ErrorSpan>{errors?.rdMajor?.message}</ErrorSpan>
-                </InputWrap> :""}
             </form>
-            <div onClick={onClickThird} className="mx-20 text-right cursor-pointer">+</div>
             <div className="hidden lg:flex absolute bottom-0">
                 <img src = "누워있는대충이.png" className="object-contain w-32"/>
                 <img src = "하트.png" className=" object-contain w-10"/>

@@ -1,5 +1,5 @@
-import { Lcate } from "@/components/navBar";
-import ProfileBar from "@/components/profileBar";
+import ProfileBar from "../../components/profileBar";
+
 
 export default function Profile() {
     return (
