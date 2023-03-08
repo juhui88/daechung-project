@@ -1,6 +1,7 @@
-import Layout from "@/components/laytout";
-import Note from "@/components/note";
-import NoteCreate from "@/components/noteCreate";
+import Layout from "../../components/laytout"
+import Note from "../../components/note"
+import NoteCreate from "../../components/noteCreate"
+
 
 export default function LCateDetail({cate}) {
     

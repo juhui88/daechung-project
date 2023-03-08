@@ -1,6 +1,11 @@
 import {atom, selector} from 'recoil'
 import { v1 } from 'uuid';
 
+export const tokenState = atom({
+    key: "tokenState",
+    default: ""
+})
+
 export const lCateFoldState = atom({
   key: `lCateFoldState/${v1()}`, 
   default: [
@@ -55,3 +60,4 @@ export const mCateFoldState = atom({
     ]
 ]
 })
+

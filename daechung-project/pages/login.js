@@ -5,15 +5,13 @@ import Link from "next/link";
 export const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback";
 
 export default function Login() {
-
     return (
     <div className="h-screen flex flex-col ">
         <div className="w-96 mt-32  mx-auto">
             <div className="mb-2">
                 <span className="text-textPoint font-extrabold ">로그인</span>
             </div>
-            <Link className="flex border-2 border-gray-300 p-2 cursor-pointer mb-2"
-                href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`}>
+            <Link href={"http://13.124.100.192/auth/kakao/callback"} className="flex border-2 border-gray-300 p-2 cursor-pointer mb-2">
                 <img className="h-6" src="kakaoLogo.png"/>
                 <span className="mx-auto text-gray-600">카카오톡 계정으로 시작하기</span>
             </Link>

@@ -1,43 +1,50 @@
 import axios from "axios";
-import { Router } from "next/router";
-import { useEffect } from "react"
-import { REDIRECT_URI } from "../../login";
+import { Router, useRouter } from "next/router";
+import { useEffect, useState } from "react"
+import { useRecoilState } from "recoil";
 
 export default function GetToken() {
     let code;
+    let token;
+    const router = useRouter();
 
-    const getUser = async (token) => {
-        const {data} =  await axios({
+   /*  const isUser = async (token) => {
+         console.log(token)
+        await axios({
             method: "GET",
             headers: {
-                Authorization: 'Bearer ' + token,
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+                "Authorization": `Bearer ${token}`,
+                "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
             },
             url :"https://kapi.kakao.com/v2/user/me"
-        })
-        console.log(data);
-        localStorage.setItem("id", data.id)
-    }
+        }).then(res => console.log(res))
+         .catch(err=>console.log(err))
+    } */
     
-    useEffect(() => {
+    useEffect(async() => {
         code = new URL(window.location.href).searchParams.get('code')
         try {
-            axios({
-                method: "POST",
-                headers: {'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'},
-                url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&code=${code}`,
-                
-            }).then((res) => {
-                getUser(res.data.access_token)
-                localStorage.setItem("token", res.data.access_token)
-                
-                
-            }).catch((err) => { console.log(err) })  
-        } catch (err) {
+            const result = await axios.get(`http://13.124.100.192/auth/kakao/callback?code=${code}`).catch(err=>console.log(err))
+
+            console.log(result)
+            token = result.data.token;
+            console.log(token)
+
+            /* if(result.data.isUser === false){
+                router.push("/join")
+            }else{
+                router.push("/home")
+            } */
+            if(token){
+                router.push({
+                    pathname:`/join/${token}`,
+                })
+            }
+            
+        } catch(err){
             console.log(err)
         }
-    }, [code])
-
+    }, [code, token])
     return (<div className="flex w-screen h-screen justify-center items-center">
         <span>로그인 중입니다. . .</span>
     </div>)

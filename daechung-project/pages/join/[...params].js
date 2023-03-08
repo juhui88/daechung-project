@@ -2,7 +2,9 @@ import axios from "axios";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
+import { tokenState } from "../../components/atom";
 
 const InputWrap = tw.div`
     mx-20
@@ -34,10 +36,13 @@ const ProfileImg = tw.button`
 `
 
 
-export default function Profile() {
+export default function Profile({params}) {
+    const [token, setToken] = useRecoilState(tokenState);
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [profileImgNum, setProfileImgNum] = useState(0);
 
+    setToken(params[0])
+    console.log(token)
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios({
@@ -130,4 +135,10 @@ export default function Profile() {
             </div>
         </div>
     </div>
+}
+
+export async function getServerSideProps({ params:{params}}){
+    return {
+        props:{params}
+    }
 }
