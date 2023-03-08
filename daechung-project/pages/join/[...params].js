@@ -44,7 +44,7 @@ export default function Profile({params}) {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios({
             method: "POST",
-            url:"http://13.124.100.192/auth/sign-up",
+            url:""/* "http://13.124.100.192/auth/sign-up" */,
             headers: {
                 "Authorization": `Bearer ${params[0]}`,
                 "Content-Type" : "application/json"
