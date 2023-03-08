@@ -37,29 +37,27 @@ const ProfileImg = tw.button`
 
 
 export default function Profile({params}) {
-    const [token, setToken] = useRecoilState(tokenState);
+    console.log(params[0])
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [profileImgNum, setProfileImgNum] = useState(0);
-
-    setToken(params[0])
-    console.log(token)
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios({
             method: "POST",
+            url:"http://13.124.100.192/auth/sign-up",
             headers: {
+                "Authorization": `Bearer ${params[0]}`,
                 "Content-Type" : "application/json"
             },
             body: JSON.stringify({
-                name: data.name,
                 schoolName:data.uniName,
                 studentNumber:data.stuId,
                 major1:data.major1,
                 major2:data.major2 ? data.major2 : "",
                 profileImgUrl:"",
             })
-        })
-        Router.push('home')
+        }).then(res=>console.log(res))
+        
     }
 
     const onClickProImg = (num) => {
@@ -73,14 +71,6 @@ export default function Profile({params}) {
             
             <form className=" grid gap-10 xl text-gray-500" onSubmit = {handleSubmit(onValid)}>
                 <button type="submit" className="fixed top-3 right-3 font-semibold hover:scale-110 transition">시작하기➜</button>
-                <InputWrap>
-                    <InputField>
-                        <span>이름*:</span>
-                        <Input type="text" {...register("name", {required:"이름을 입력해주세요"})}/>    
-                    </InputField>
-                     
-                    <ErrorSpan>{errors?.name?.message}</ErrorSpan>
-                </InputWrap>
                 <InputWrap>
                     <InputField>
                         <span>학교*:</span>
@@ -103,7 +93,7 @@ export default function Profile({params}) {
                         <Input type="text" {...register(`major1`, {required:"전공을 입력해주세요"})}/>
                         
                     </InputField>
-                    <ErrorSpan>{errors?.stMajor?.message}</ErrorSpan>
+                    <ErrorSpan>{errors?.major1?.message}</ErrorSpan>
                     
                 </InputWrap>
                 <InputWrap>
@@ -112,14 +102,13 @@ export default function Profile({params}) {
                         <Input type="text" {...register(`major2`)}/>
                         
                     </InputField>
-                    <ErrorSpan>{errors?.ndMajor?.message}</ErrorSpan>
                     
                 </InputWrap>
             </form>
-            <div className="hidden lg:flex absolute bottom-0">
+            {/* <div className="hidden lg:flex absolute bottom-0">
                 <img src = "누워있는대충이.png" className="object-contain w-32"/>
                 <img src = "하트.png" className=" object-contain w-10"/>
-            </div>
+            </div> */}
         </div>
         <div className="bg-bgPoint lg:flex-grow">
             <div className="p-10 text-3xl font-extrabold text-gray-500">

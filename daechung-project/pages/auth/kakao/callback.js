@@ -21,29 +21,34 @@ export default function GetToken() {
          .catch(err=>console.log(err))
     } */
     
-    useEffect(async() => {
-        code = new URL(window.location.href).searchParams.get('code')
-        try {
-            const result = await axios.get(`http://13.124.100.192/auth/kakao/callback?code=${code}`).catch(err=>console.log(err))
+    useEffect(() => {
+        /* async function getToken(){
+            await axios.get(`http://13.124.100.192/auth/kakao/callback`)
+            .then(res=>{
+                token = res.data.token
+                console.log(token)
+                if(token){
+                    router.push(`/join/${token}`);
+                }
+            })
+            .catch(err=>console.log(err))
+        }
+        getToken() */
+        /* try {
 
-            console.log(result)
-            token = result.data.token;
-            console.log(token)
-
-            /* if(result.data.isUser === false){
+            
+            token = result.data.token; 
+            
+             if(result.data.isUser === false){
                 router.push("/join")
             }else{
                 router.push("/home")
-            } */
-            if(token){
-                router.push({
-                    pathname:`/join/${token}`,
-                })
-            }
+            } 
             
+        }
         } catch(err){
             console.log(err)
-        }
+        } */
     }, [code, token])
     return (<div className="flex w-screen h-screen justify-center items-center">
         <span>로그인 중입니다. . .</span>
