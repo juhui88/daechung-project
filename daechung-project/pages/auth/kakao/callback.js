@@ -2,6 +2,7 @@ import axios from "axios";
 import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil";
+import { tokenState } from "../../../components/atom";
 
 export default function GetToken() {
     let code;
@@ -22,18 +23,30 @@ export default function GetToken() {
     } */
     
     useEffect(() => {
-        /* async function getToken(){
-            await axios.get(`http://13.124.100.192/auth/kakao/callback`)
+        code = new URL(window.location.href).searchParams.get('code')
+        async function getToken(){
+            await axios.get(`http://13.124.100.192/auth/kakao/callback?code=${code}`)
             .then(res=>{
                 token = res.data.token
-                console.log(token)
-                if(token){
-                    router.push(`/join/${token}`);
-                }
+                console.log(token);
+                axios.get(`http://13.124.100.192/users/me`,{
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type" : "application/json"
+                    }
+                }).then(res=>{
+                    if(res.data.user.major1){
+                        router.push(`/home/${token}`)
+                    }else{
+                        router.push(`/join/${token}`)
+                    }
+                })
+                .catch(err=>console.log(err))
+                
             })
             .catch(err=>console.log(err))
         }
-        getToken() */
+        getToken() 
         /* try {
 
             

@@ -37,25 +37,25 @@ const ProfileImg = tw.button`
 
 
 export default function Profile({params}) {
-    console.log(params[0])
+    console.log(params)
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [profileImgNum, setProfileImgNum] = useState(0);
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
-        axios({
-            method: "POST",
-            url:""/* "http://13.124.100.192/auth/sign-up" */,
-            headers: {
-                "Authorization": `Bearer ${params[0]}`,
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({
+        axios.post(
+            "http://13.124.100.192/auth/sign-up",
+            {
                 schoolName:data.uniName,
                 studentNumber:data.stuId,
                 major1:data.major1,
                 major2:data.major2 ? data.major2 : "",
                 profileImgUrl:"",
-            })
+            },
+            {
+                headers: {
+                "Authorization": `Bearer ${params}`,
+                "Content-Type" : "application/json"
+            },
         }).then(res=>console.log(res))
         
     }
@@ -126,7 +126,7 @@ export default function Profile({params}) {
     </div>
 }
 
-export async function getServerSideProps({ params:{params}}){
+export async function getServerSideProps({ params}){
     return {
         props:{params}
     }
