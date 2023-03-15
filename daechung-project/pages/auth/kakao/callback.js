@@ -25,24 +25,33 @@ export default function GetToken() {
     useEffect(() => {
         code = new URL(window.location.href).searchParams.get('code')
         async function getToken(){
-            await axios.get(`http://13.124.100.192/auth/kakao/callback?code=${code}`)
+            await axios.get(`http://43.200.254.117/auth/kakao/callback?code=${code}`)
             .then(res=>{
-                token = res.data.token
-                console.log(token);
-                axios.get(`http://13.124.100.192/users/me`,{
+                console.log(res)
+                localStorage.setItem("token",res.data.token)
+                if(res.data.isActive){
+                    router.push(`/home/${res.data.token}`)
+                }
+                else{
+                    router.push(`join/${res.data.token}`)
+                }
+                /* axios.get(`http://43.200.254.117/users/me`,{
                     headers: {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type" : "application/json"
                     }
                 }).then(res=>{
+                    console.log(res)
                     if(res.data.user.major1){
                         router.push(`/home/${token}`)
                     }else{
                         router.push(`/join/${token}`)
                     }
-                })
+                }) 
                 .catch(err=>console.log(err))
                 
+             */
+            
             })
             .catch(err=>console.log(err))
         }

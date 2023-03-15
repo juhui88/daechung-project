@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
 import { tokenState } from "../../components/atom";
+import Image from 'next/image'
 
 const InputWrap = tw.div`
     mx-20
@@ -33,23 +34,24 @@ const ProfileImg = tw.button`
     focus:ring-2
     ring-gray-500
     transition
+    my-10
 `
 
 
 export default function Profile({params}) {
-    console.log(params)
+    console.log("sign-up",params)
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [profileImgNum, setProfileImgNum] = useState(0);
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios.post(
-            "http://13.124.100.192/auth/sign-up",
+            "http://43.200.254.117/auth/sign-up",
             {
                 schoolName:data.uniName,
-                studentNumber:data.stuId,
+                studentNumber: Number(data.stuId),
                 major1:data.major1,
                 major2:data.major2 ? data.major2 : "",
-                profileImgUrl:"",
+                profileImgUrl:"dfdsfsfa",//이미지 무조건 있게
             },
             {
                 headers: {
@@ -70,7 +72,8 @@ export default function Profile({params}) {
             </div>
             
             <form className=" grid gap-10 xl text-gray-500" onSubmit = {handleSubmit(onValid)}>
-                <button type="submit" className="fixed top-3 right-3 font-semibold hover:scale-110 transition">시작하기➜</button>
+                <button type="submit" className="hidden lg:block absolute lg:fixed lg:bottom-10 lg:right-10 font-semibold hover:scale-110 transition text-textPoint border-2 border-gray-300 p-2 text-xl shadow-lg">시작하기➜</button>
+                <button type="submit" className="absolute -top-3 right-0 lg:hidden font-semibold hover:scale-110 transition text-textPoint border-2 border-gray-300 p-2 text-xl shadow-lg">시작하기➜</button>
                 <InputWrap>
                     <InputField>
                         <span>학교*:</span>
@@ -105,10 +108,10 @@ export default function Profile({params}) {
                     
                 </InputWrap>
             </form>
-            {/* <div className="hidden lg:flex absolute bottom-0">
-                <img src = "누워있는대충이.png" className="object-contain w-32"/>
-                <img src = "하트.png" className=" object-contain w-10"/>
-            </div> */}
+            <div className="hidden lg:flex absolute bottom-0">
+                <Image src = "/누워있는대충이.png" className="object-contain"  width={128} height={30}/>
+                <Image src = "/하트.png" className=" object-contain" width={40} height={30}/>
+            </div> 
         </div>
         <div className="bg-bgPoint lg:flex-grow">
             <div className="p-10 text-3xl font-extrabold text-gray-500">
@@ -126,7 +129,7 @@ export default function Profile({params}) {
     </div>
 }
 
-export async function getServerSideProps({ params}){
+export async function getServerSideProps({ params:{params}}){
     return {
         props:{params}
     }

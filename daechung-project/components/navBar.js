@@ -1,8 +1,10 @@
+import axios from "axios"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import { useRecoilState } from "recoil"
+import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
+import { useRecoilState, useRecoilValue } from "recoil"
 import tw from "tailwind-styled-components"
-import { lCateFoldState } from "./atom"
+import { lCateFoldState, tokenState } from "./atom"
 import MediumCategory from "./navBarItem/mCate"
 
 export const Lcate = tw.div`
@@ -50,9 +52,9 @@ const mCate = [
 
 export default function NavBar() {
     const router = useRouter();
+    const [largeCates, setLargeCates] = useState([])
     const [fold, setfold] = useRecoilState(lCateFoldState);
     const [menuIsOpen , setMenuIsOpen] = useState(false);
-    
     const onClickLFold = (i) => {
         setfold(
             fold.map(item=>
@@ -66,9 +68,32 @@ export default function NavBar() {
     const onClickLcate = (name) => {
         router.push(`/notes/${name}`);
     }
+     
+    useEffect(()=>{
+    async function getLargeCates(){
+            const res = await axios.get(`http://43.200.254.117/large-cates`,{
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type" : "application/json"
+                }
+            })
+            .then(res=>{
+                setLargeCates(res.data.largeCates)
+                console.log(largeCates)
+
+            })
+            .catch(err=>console.log(err))
+        }
+        getLargeCates();
+    }
+    ,[]) 
+
     
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
+            {/* {largeCates.map(i=>
+                <div>{i.name}</div>
+                )} */}
         <Lcate>
             <div className="flex-1" onClick={()=>onClickLcate("교과")}>
                 <PlusBtn >+</PlusBtn>

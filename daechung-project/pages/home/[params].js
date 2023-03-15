@@ -1,17 +1,18 @@
 import Layout from "../../components/laytout";
 import Note from "../../components/note"
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { tokenState } from "../../components/atom";
 
 export default function Homepage({params}) {
     const [token,setToken] = useRecoilState(tokenState);
-    setToken(params);
+    const [largeCateData, setLargeCateData] = useState([]);
 
-    console.log(token)
+        
+        
     useEffect(()=>{
-         async function getLargeCates(){
+         /* async function getLargeCates(){
             await axios.get(`http://13.124.100.192/large-cates`,{
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -19,13 +20,16 @@ export default function Homepage({params}) {
                 }
             })
             .then(res=>{
-                console.log(res)
+                setLargeCateData(res.data.largeCates)
             })
             .catch(err=>console.log(err))
         }
-        getLargeCates()
-    })
-    
+        getLargeCates()*/
+        if(token===""){
+            setToken(params);
+        }
+        
+    },[]) 
     return <Layout>
         <div className="pb-10 pl-8 pr-28 ">
             {[1, 2, 3, 4, 5, 6, 7].map(i => <div key = {i}>
