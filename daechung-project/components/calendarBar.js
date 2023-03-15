@@ -66,7 +66,6 @@ export default function CalendarBar() {
   const [today, setToday] = useState(date.clone().format("YYYY-MM-DD"))
 
   const handleMonth = (num) => (num ? setDate(date.clone().add(1, 'month')) : setDate(date.clone().subtract(1, 'month')));
-  const handleYear = (num) =>(num ? setDate(date.clone().add(1, 'year')) : setDate(date.clone().subtract(1, 'year')));
   const returnToday  = () => setDate(moment());
 
   const buildCalendar = () => {
@@ -147,11 +146,7 @@ export default function CalendarBar() {
           </span>
         </div>
         <div className="flex justify-center items-center space-x-5 pt-3 pb-5 ">
-          <span onClick={() => handleYear(0)} className="cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
-          </svg>
-          </span>
+          
           <span onClick={()=>handleMonth(0)} className="cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -161,11 +156,6 @@ export default function CalendarBar() {
           <span onClick={()=>handleMonth(1)} className="cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-          </span>
-          <span onClick={() => handleYear(1)} className="cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
             </svg>
           </span>
         </div>
