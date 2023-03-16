@@ -1,4 +1,4 @@
-import Layout from "@/components/laytout"
+import Layout from "../../components/laytout";
 
 export default function SearchDetail({keyword}) {
   return <Layout>
