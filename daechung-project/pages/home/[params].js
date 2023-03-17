@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { tokenState } from "../../components/atom";
 
-export default function Homepage({params}) {
+export default function Home({params}) {
     const [token,setToken] = useRecoilState(tokenState);
     const [largeCateData, setLargeCateData] = useState([]);
 
