@@ -1,4 +1,3 @@
-import { kakaoInit } from "../components/kakaoInit";
 import Router from "next/router";
 import Link from "next/link";
 
