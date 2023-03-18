@@ -1,10 +1,9 @@
 import axios from "axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
-import { tokenState } from "../../components/atom";
 import Image from 'next/image'
 
 const InputWrap = tw.div`
@@ -38,10 +37,11 @@ const ProfileImg = tw.button`
 `
 
 
-export default function Profile({params}) {
-    console.log("sign-up",params)
+export default function Signup() {
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [profileImgNum, setProfileImgNum] = useState(0);
+    const router = useRouter();
+    const token = router.query.token
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios.post(
@@ -55,10 +55,18 @@ export default function Profile({params}) {
             },
             {
                 headers: {
-                "Authorization": `Bearer ${params}`,
+                "Authorization": `Bearer ${token}`,
                 "Content-Type" : "application/json"
             },
-        }).then(res=>console.log(res))
+        }).then(res=>{
+            console.log(res)
+            router.push({
+                pathname: "/home",
+                query: {
+                    token: token
+                }
+            },"/home")
+        })
         
     }
 
@@ -127,10 +135,4 @@ export default function Profile({params}) {
             </div>
         </div>
     </div>
-}
-
-export async function getServerSideProps({ params:{params}}){
-    return {
-        props:{params}
-    }
 }

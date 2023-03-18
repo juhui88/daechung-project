@@ -2,9 +2,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { tokenState } from "./atom";
-import CalendarBar from "./calendarBar";
-import NavBar from "./navBar";
-import Search from "./search";
+import CalendarBar from "./layoutComponents/calendar";
+import NavBar from "./layoutComponents/navBar";
+import Search from "./layoutComponents/search";
 
 export default function Layout({children}) {
     const [token, setToken] = useRecoilState(tokenState)

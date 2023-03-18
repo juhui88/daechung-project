@@ -7,13 +7,13 @@ const Scate = tw.div`
     cursor-pointer
 `
 
-export default function SmallCategory ({lCate, mCate}) {
+export default function SmallCategory ({name}) {
     const router = useRouter();
     const onClickSCate = () => {
         router.push(`/notes/${lCate}/${mCate}/기업인수합병`)
     }
 
-    return <Scate onClick={onClickSCate}>
-        <span>기업인수합병</span>
+    return <Scate>
+        <span>{name}</span>
     </Scate>
 }

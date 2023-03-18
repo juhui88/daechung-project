@@ -1,77 +1,44 @@
+import { tokenState } from "@/components/atom";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
-import { useEffect, useState } from "react"
+import { useRouter } from "next/router";
+import { useEffect } from "react"
 import { useRecoilState } from "recoil";
-import { tokenState } from "../../../components/atom";
 
 export default function GetToken() {
     let code;
-    let token;
     const router = useRouter();
+    const [token, setToken] = useRecoilState(tokenState);
 
-   /*  const isUser = async (token) => {
-         console.log(token)
-        await axios({
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
-            },
-            url :"https://kapi.kakao.com/v2/user/me"
-        }).then(res => console.log(res))
-         .catch(err=>console.log(err))
-    } */
-    
     useEffect(() => {
         code = new URL(window.location.href).searchParams.get('code')
         async function getToken(){
             await axios.get(`http://43.200.254.117/auth/kakao/callback?code=${code}`)
             .then(res=>{
-                console.log(res)
+                setToken(res.data.token)
                 localStorage.setItem("token",res.data.token)
                 if(res.data.isActive){
-                    router.push(`/home/${res.data.token}`)
+                    router.push({
+                        pathname:"/home",
+                        query: {
+                            token: res.data.token
+                        }
+                    },"/home")
                 }
-                else{
-                    router.push(`join/${res.data.token}`)
-                }
-                /* axios.get(`http://43.200.254.117/users/me`,{
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type" : "application/json"
+                else{ 
+                router.push({
+                    pathname:`/signup`,
+                    query:{
+                        token: res.data.token
                     }
-                }).then(res=>{
-                    console.log(res)
-                    if(res.data.user.major1){
-                        router.push(`/home/${token}`)
-                    }else{
-                        router.push(`/join/${token}`)
-                    }
-                }) 
-                .catch(err=>console.log(err))
+                },"/signup")
+            }
                 
-             */
             
             })
             .catch(err=>console.log(err))
         }
         getToken() 
-        /* try {
-
-            
-            token = result.data.token; 
-            
-             if(result.data.isUser === false){
-                router.push("/join")
-            }else{
-                router.push("/home")
-            } 
-            
-        }
-        } catch(err){
-            console.log(err)
-        } */
-    }, [code, token])
+    }, [code])
     return (<div className="flex w-screen h-screen justify-center items-center">
         <span>로그인 중입니다. . .</span>
     </div>)

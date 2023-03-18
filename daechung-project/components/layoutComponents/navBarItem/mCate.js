@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 import { useRecoilState } from "recoil"
 import tw from "tailwind-styled-components"
-import { mCateFoldState } from "../atom"
+import { mCateFoldState } from "../../atom"
 import { FoldBtn, PlusBtn } from "../navBar"
 import SmallCategory from "./sCate"
 
@@ -15,12 +15,17 @@ const Mcate = tw.div`
     group
     w-64
 `
-const semester = ["1학년 1학기","1학년 2학기","2학년 1학기"," 2학년 2학기"," 3학년 1학기","3학년 2학기","4학년 1학기", "4학년 2학기"]
 
-const lCate = ["교과", "비교과", "기타"]
-export default function MediumCategory({mCate, lCateIndex}) {
-    const [fold,setFold] = useRecoilState(mCateFoldState)
-    const router = useRouter();
+const sCate = [
+    {
+        name:"데이터마이닝"
+    },
+    {
+        name:"시스템프로그래밍"
+    },
+]
+export default function MediumCategory({name}) {
+    /* const router = useRouter();
 
     const findIndex = () => {
         for (let i =0; i < fold.length ; i ++) {
@@ -40,21 +45,18 @@ export default function MediumCategory({mCate, lCateIndex}) {
     }
     const onClickMcate = () => {
         router.push(`/notes/${lCate[lCateIndex]}/${mCate}`)
-    }
+    } */
 
     return <Mcate >
-    <div className="flex justify-between"onClick={onClickMcate}>
+    <div className="flex justify-between">
         <div className="flex-1 cursor-pointer">
             <PlusBtn>+</PlusBtn>
-            <span className="pl-1">{mCate}</span>
+            <span className="pl-1">{name}</span>
         </div>
-        <div onClick={()=>onClickLFold(mCate)}>
-            <FoldBtn>{fold[lCateIndex][index].isFold? "⏷":"⏶" }</FoldBtn>
+        <div>
+            <FoldBtn>⏷</FoldBtn>
         </div>
     </div>
-    {fold[lCateIndex][index].isFold ? 
-    <SmallCategory lCate={lCate[lCateIndex]} mCate = {mCate}/>
-    : null}
-    
+    {sCate.map(small => <SmallCategory name = {small.name}/>)}
     </Mcate>
 }
