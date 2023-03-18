@@ -1,8 +1,13 @@
 import axios from "axios";
-import CalendarBar from "./calendarBar";
-import { Lcate } from "./navBar";
+import CalendarBar from "./layoutComponents/calendar";
+import tw from "tailwind-styled-components"
+import { useRouter } from "next/router";
 
+const Item = tw.div`
+bg-itemBg p-2 pl-2 w-64 flex justify-between group hover:cursor-pointer font-semibold text-textPoint
+`
 export default function ProfileBar({ children }) {
+    const router = useRouter()
     const onClick = () => {
         axios({
             method: "POST",
@@ -18,20 +23,27 @@ export default function ProfileBar({ children }) {
             
         })
     }
+
+    const onClickAboutMe = () => {
+        router.push(`/profile/aboutMe`)
+    }
     return (
         <div className="flex mt-44">
             <div className=" space-y-1">
-                <Lcate>
+                <Item>
                     계정
-                </Lcate>
-                <Lcate onClick={onClick}>
+                </Item>
+                <Item onClick={onClickAboutMe}>
+                    About me
+                </Item>
+                <Item onClick={onClick}>
                     로그아웃
-                </Lcate>    
+                </Item>    
             </div>
-            <div className="flex-1">
+            <div className="flex-1 ml-10">
                 {children}
             </div>
-            <div className="">
+            <div className="hidden lg:block">
                 <CalendarBar/>
             </div>
         </div>
