@@ -82,6 +82,9 @@ export default function NavBar() {
     const onClickLcate = (name) => {
         router.push(`/notes/${name}`);
     }
+    const onClickMcate = (lcateName, mCateName) => {
+        router.push(`/notes/${lcateName}/${mCateName}`);
+    }
 
     useEffect(()=>{
         axios.get(`http://43.200.254.117/large-cates`)
@@ -98,18 +101,8 @@ export default function NavBar() {
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
             {LCate.map((large,i )=><div> {/* 백엔드 안정화되면 수정 */}
-            <LargeCategory name = {/* large.name */ large.name} />
-            {large.mediumCates.map((medium,i)=>
-            <div className="my-2">
-                <MediumCategory name = {medium.name}/>
-            </div>
-            
-            )}
-            </div>
-            
-            )}
-
-            
+            <LargeCategory lCateName= {large.name} mCates = {large.mediumCates}/>
+        </div>)}
         </div>
     </div>
 }

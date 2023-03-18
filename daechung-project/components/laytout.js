@@ -13,7 +13,7 @@ export default function Layout({children}) {
     <div className=" w-srceen h-screen flex flex-col">
         <div className="">
             <div className="relative flex  h-24">
-                <Link href = {`/home/${token}`} className="flex items-end ml-5">
+                <Link href = {`/home`} className="flex items-end ml-5">
                     <span className=" text-3xl text-gray-700 font-normal">HOME</span>
                 </Link>
                 <Link href ="/profile"className="absolute right-0 p-5 flex flex-col-2 space-x-2 items-center h-10">
