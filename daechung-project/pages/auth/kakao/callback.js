@@ -12,7 +12,7 @@ export default function GetToken() {
     useEffect(() => {
         code = new URL(window.location.href).searchParams.get('code')
         async function getToken(){
-            await axios.get(`http://43.200.254.117/auth/kakao/callback?code=${code}`)
+            await axios.get(`https://b-lab.kr/auth/kakao/callback?code=${code}`)
             .then(res=>{
                 setToken(res.data.token)
                 localStorage.setItem("token",res.data.token)
