@@ -2,6 +2,7 @@ import axios from "axios";
 import CalendarBar from "./layoutComponents/calendar";
 import tw from "tailwind-styled-components"
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Item = tw.div`
 bg-itemBg p-2 pl-2 w-64 flex justify-between group hover:cursor-pointer font-semibold text-textPoint
@@ -27,10 +28,17 @@ export default function ProfileBar({ children }) {
     const onClickAboutMe = () => {
         router.push(`/profile/aboutMe`)
     }
+    const onClickProfile = () => {
+        router.push(`/profile`)
+    }
     return (
-        <div className="flex mt-44">
+        <div>
+        <Link href = {`/home`} className="flex items-end ml-5 my-20">
+            <span className=" text-3xl text-gray-700 font-normal">HOME</span>
+        </Link>
+        <div className="flex ">
             <div className=" space-y-1">
-                <Item>
+                <Item onClick={onClickProfile}>
                     계정
                 </Item>
                 <Item onClick={onClickAboutMe}>
@@ -47,5 +55,7 @@ export default function ProfileBar({ children }) {
                 <CalendarBar/>
             </div>
         </div>
-    )
+       
+    </div>) 
+        
 }
