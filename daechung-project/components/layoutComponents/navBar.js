@@ -87,7 +87,7 @@ export default function NavBar() {
     }
 
     useEffect(()=>{
-        axios.get(`http://43.200.254.117/large-cates`)
+        axios.get(`https://b-lab.kr/large-cates`)
         .then(response=>{
             setLCate(response.data.largeCates)
             console.log(response.data.largeCates)

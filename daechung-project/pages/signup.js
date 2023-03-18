@@ -45,7 +45,7 @@ export default function Signup() {
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios.post(
-            "http://43.200.254.117/auth/sign-up",
+            "https://b-lab.kr/auth/sign-up",
             {
                 schoolName:data.uniName,
                 studentNumber: Number(data.stuId),
