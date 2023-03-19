@@ -45,7 +45,7 @@ export default function Signup() {
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios.post(
-            `https://${process.env.API_ROUTENEXT_PUBLIC_API_URL}/auth/sign-up`,
+            `https://${process.env.NEXT_PUBLIC_API_URL}/auth/sign-up`,
             {
                 schoolName:data.uniName,
                 studentNumber: Number(data.stuId),
