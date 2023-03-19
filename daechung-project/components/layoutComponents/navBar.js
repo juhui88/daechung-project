@@ -100,7 +100,7 @@ export default function NavBar() {
     
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
-            {LCate.map((large,i )=><div> {/* 백엔드 안정화되면 수정 */}
+            {lcate.map((large,i )=><div> {/* 백엔드 안정화되면 수정 */}
             <LargeCategory lCateName= {large.name} mCates = {large.mediumCates}/>
         </div>)}
         </div>

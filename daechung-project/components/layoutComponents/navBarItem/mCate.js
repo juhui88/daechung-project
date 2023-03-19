@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
@@ -15,6 +16,7 @@ const sCate = [
 ]
 export default function MediumCategory({mCateName, mCateId, lCateName}) {
     const router = useRouter();
+    const [scates, setScates] = useState([])
 /* 
     const findIndex = () => {
         for (let i =0; i < fold.length ; i ++) {
@@ -40,7 +42,14 @@ export default function MediumCategory({mCateName, mCateId, lCateName}) {
     } 
 
     useEffect(()=>{
-        //여기서 id값에 따른 값 보여주기
+        axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/small-cates/${mCateId}`)
+        .then(response=>{
+            setScates(response.data.smallcates)
+            console.log(response.data.smallcates)
+            /* const falseList = (response.data.length).fill(false);
+            setLCate(falseList) */
+        })
+        .catch(error=>console.log(error))
     },[])
 
     return (<div>
@@ -55,7 +64,7 @@ export default function MediumCategory({mCateName, mCateId, lCateName}) {
             </div>
         </div>
         <div>
-            {sCate.map(small =><div onClick={()=>onClickScate(small.name)}>
+            {scates.map(small =><div onClick={()=>onClickScate(small.name)}>
                 <SmallCategory name = {small.name}/>
             </div> )}
         </div>

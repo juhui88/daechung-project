@@ -10,6 +10,8 @@ export default function LargeCategory({lCateName, mCates}){
     const onClickLcate = ()=> {
         router.push(`/notes/${lCateName}`)
     }
+
+    console.log(mCates)
     return(
     <div>
         <div onClick={onClickLcate} className="bg-itemBg p-2 pl-2 w-64 flex justify-between group hover:cursor-pointer font-semibold text-textPoint">
