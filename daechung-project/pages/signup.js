@@ -45,7 +45,7 @@ export default function Signup() {
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios.post(
-            "https://b-lab.kr/auth/sign-up",
+            `${process.env.API_ROUTENEXT_PUBLIC_API_URL}/auth/sign-up`,
             {
                 schoolName:data.uniName,
                 studentNumber: Number(data.stuId),
@@ -74,7 +74,7 @@ export default function Signup() {
         setProfileImgNum(num)
     }
     return <div className="lg:h-screen lg:flex">
-        <div className=" m-10 lg:flex-grow relative">
+        <div className=" m-10 lg:flex-grow relative ">
             <div className="mb-7">
                 <span className="text-3xl font-extrabold text-gray-500">회원 정보 입력</span>
             </div>
@@ -121,7 +121,7 @@ export default function Signup() {
                 <Image src = "/하트.png" className=" object-contain" width={40} height={30}/>
             </div> 
         </div>
-        <div className="bg-bgPoint lg:flex-grow">
+        <div className="bg-bgPoint lg:flex-grow w-1/6">
             <div className="p-10 text-3xl font-extrabold text-gray-500">
                 <span>프로필을 선택하세요 :&#41;</span>
             </div>

@@ -69,7 +69,7 @@ export default function NoteCreate() {
         </div>
         <form  onSubmit={handleSubmit(onValid)} className="border flex-1 border-gray-400 ">
         
-            <textarea {...register("text")} type="text" className="text-sm h-full p-1 w-full break-all normal-nums" rows={3} />
+            <input {...register("text")} type="text" className="text-sm h-full p-1 w-full break-all normal-nums" rows={3} />
             <button className="hidden"/>
         </form>
     </div>
