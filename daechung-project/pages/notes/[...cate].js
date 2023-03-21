@@ -1,7 +1,19 @@
+import axios from "axios";
 import Layout from "../../components/laytout"
 import Note from "../../components/note"
 import NoteCreate from "../../components/noteCreate"
 
+axios.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
+    config.headers['Content-Type'] = 'application/json';
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 export default function LCateDetail({cate}) {
     
