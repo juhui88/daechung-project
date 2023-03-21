@@ -21,7 +21,8 @@ export const FoldBtn = tw.button`
     group-hover:opacity-100
     group-hover:duration-300
     pr-3
-    text-gray-600
+    text-gray-500
+    hover:text-black
 `
 const LCate = [
     {
@@ -68,6 +69,7 @@ const LCate = [
 export default function NavBar() {
     const router = useRouter();
     const [lcate, setLCate] = useState([])
+    const [lCateFold, setLCateFold] = useState()
     const [menuIsOpen , setMenuIsOpen] = useState(false);
     const onClickLFold = (i) => {
         setfold(
@@ -90,9 +92,11 @@ export default function NavBar() {
         axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/large-cates`)
         .then(response=>{
             setLCate(response.data.largeCates)
-            console.log(response.data.largeCates)
-            /* const falseList = (response.data.length).fill(false);
-            setLCate(falseList) */
+
+            const length = Number(response.data.largeCates.length)
+            const falseList = Array(length).fill(false);
+            setLCateFold(falseList)
+            console.log(lCateFold)
         })
         .catch(error=>console.log(error))
     },[])
@@ -101,7 +105,7 @@ export default function NavBar() {
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
             {lcate.map((large,i )=><div> {/* 백엔드 안정화되면 수정 */}
-            <LargeCategory lCateName= {large.name} mCates = {large.mediumCates} lCateId = {large.id}/>
+            <LargeCategory lCateName= {large.name} mCates = {large.mediumCates} lCateId = {large.largeCateId} isFold = {lCateFold[i]}/>
         </div>)}
         </div>
     </div>
