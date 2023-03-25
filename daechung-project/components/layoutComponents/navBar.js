@@ -24,47 +24,6 @@ export const FoldBtn = tw.button`
     text-gray-500
     hover:text-black
 `
-const LCate = [
-    {
-        name: "교과",
-        mediumCates: [
-            {
-                name: "1학년1학기"
-            },
-            {
-                name: "1학년2학기"
-            },
-            {
-                name: "2학년 1학기"
-            },
-
-        ]
-    },
-    {
-        name: "비교과",
-        mediumCates: [
-            {
-                name: "학회 TAB"
-            },
-            {
-                name: "UMC"
-            },
-
-        ]
-    },
-    {
-        name: "기타",
-        mediumCates: [
-            {
-                name: "어쩌구저쩌구 공모전"
-            },
-            {
-                name: "어쩌구저쩌구 서포터즈"
-            },
-
-        ]
-    },
-]
 
 export default function NavBar() {
     const router = useRouter();
@@ -94,9 +53,9 @@ export default function NavBar() {
             setLCate(response.data.largeCates)
 
             const length = Number(response.data.largeCates.length)
+            console.log(response.data.largeCates)
             const falseList = Array(length).fill(false);
             setLCateFold(falseList)
-            console.log(lCateFold)
         })
         .catch(error=>console.log(error))
     },[])
@@ -104,8 +63,8 @@ export default function NavBar() {
     
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
-            {lcate.map((large,i )=><div> {/* 백엔드 안정화되면 수정 */}
-            <LargeCategory lCateName= {large.name} mCates = {large.mediumCates} lCateId = {large.largeCateId} isFold = {lCateFold[i]}/>
+            {lcate.map((large,i )=><div key = {i}>
+            <LargeCategory lCateName= {large.name} lCateId = {large.id} isFold = {lCateFold[i]}/>
         </div>)}
         </div>
     </div>
