@@ -1,12 +1,16 @@
+import axios from "axios";
 import { useState } from "react"
 import { useForm } from "react-hook-form";
 
-export default function NoteCreate() {
+
+export default function NoteCreate({sCateId, propFunction}) {
     const [ img, setImg ] = useState([])
     const [ previewImg, setPreviewImg ] = useState([])
     const [imgNum, setImgNum] = useState(0);
-    const {register, handleSubmit} = useForm()
+    const {register,reset, handleSubmit} = useForm()
 
+    axios.interceptors.request.eject()
+    console.log("sCateID",sCateId)
     const insertImg = (e) => {
         const fileArr = e.target.files;
 
@@ -19,7 +23,6 @@ export default function NoteCreate() {
             
             let reader = new FileReader();
                 reader.onload = () => {
-                console.log(reader.result);
                 fileURLs[i] = reader.result;
                 setPreviewImg([...fileURLs]);
             };
@@ -27,6 +30,7 @@ export default function NoteCreate() {
         }
         
     }
+
     const onClickNumUp = () => {
         setImgNum(prev => prev !==previewImg.length-1 ? prev+1: prev)
     }
@@ -36,10 +40,34 @@ export default function NoteCreate() {
 
     const onValid = (data) => {
         console.log(data)
+        
+        const formData = new FormData();
+        formData.append('content', data.content);
+        if (data.file.length !== 0 ){
+            Array.from(data.file).map(f=>formData.append('file', f))
+        }
+        
+         axios({
+            method:"post",
+            url:`http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sCateId}`,
+            headers:{
+                'Content-Type': 'multipart/form-data',
+            },
+            data:formData
+        }).then(res=>console.log(res))
+        .catch(err=>console.log(err))
+
+        /* propFunction(true) */
+        
+        reset() 
+        setPreviewImg([])
+        /* 
+        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sCateId}`,).then(res=>console.log(res))
+        .catch(err=>console.log(err))
+         */
     }
-    return <div className="flex h-32 space-x-5">
-        <div className="w-40 relative flex items-center justify-center ">
-            {previewImg.length !== 0 && imgNum !== 0 ? 
+    return <div className="flex h-32">
+            {/* {previewImg.length !== 0 && imgNum !== 0 ? 
                 <span onClick={onClickNumDown} className="absolute left-0 text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -54,8 +82,8 @@ export default function NoteCreate() {
                     </svg>
                 </span>
                 
-            : null}
-            <label className="relative flex items-center justify-center cursor-pointer shadow-2xl w-28 bg-white h-32">
+            : null} */}
+            {/* <label className="relative flex items-center justify-center cursor-pointer shadow-2xl w-28 bg-white h-32">
             {previewImg.length !== 0 ? 
                 <div className="relative  w-28 h-32 ">
                     <img src={previewImg[imgNum]} className="bg-contain h-full" />
@@ -64,12 +92,50 @@ export default function NoteCreate() {
                 :
                 <span className="font-extrabold text-4xl  text-gray-500 ">+</span>}
                 <input type="file" className="hidden" onChange={(e)=>insertImg(e)} multiple/>
-            </label>   
+            </label>    */}
 
-        </div>
-        <form  onSubmit={handleSubmit(onValid)} className="border flex-1 border-gray-400 ">
         
-            <input {...register("text")} type="text" className="text-sm h-full p-1 w-full break-all normal-nums" rows={3} />
+        <form className="w-full" onSubmit={handleSubmit(onValid)} encType="multipart/form-data">
+            <div className="flex space-x-2 ">
+                <div className=" w-40 relative flex items-center justify-center ">
+                    {previewImg.length !== 0 && imgNum !== 0 ? 
+                    <span onClick={onClickNumDown} className="absolute z-10 left-0 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                    </span>
+                
+                : null}
+                {previewImg.length > 1 && imgNum !== previewImg.length-1 ? 
+                    <span onClick={onClickNumUp} className="absolute z-10 text-gray-500 right-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </span>
+                
+                    : null}
+                    <label>
+                        {previewImg.length !== 0 ? 
+                        <div className="relative  w-28 h-32 shadow-xl flex items-center">
+                            <img src={previewImg[imgNum]} className="" />
+                            <span className="absolute bottom-0 bg-itemBg px-1 rounded-md text-textPoint font-bold right-2">{imgNum+1}/{previewImg.length}</span>
+                        </div>
+                        :
+                        <div className="w-28 h-32 flex justify-center items-center shadow-xl cursor-pointer ">
+                            <span className="text-5xl font-bold text-gray-500 ">+</span>
+                        </div>
+                        }
+
+                        <input {...register("file")} type="file" className="hidden" onChange={(e)=>insertImg(e)} multiple/>
+                    </label>    
+                </div>
+                
+                <div className="flex-1 ">
+                <input {...register("content")} type="text" className="border border-gray-400 text-sm h-32 p-1 w-full break-all normal-nums" rows={3} />        
+                </div>
+                
+            </div>
+            
             <button className="hidden"/>
         </form>
     </div>

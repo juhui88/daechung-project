@@ -44,7 +44,7 @@ export default function ProfileBar({ children }) {
                 <Item onClick={onClickAboutMe}>
                     About me
                 </Item>
-                <Item onClick={onClick}>
+                <Item>
                     로그아웃
                 </Item>    
             </div>

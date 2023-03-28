@@ -14,7 +14,12 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     const [mCateFold, setMCateFold] = useState()
     const [clicked, setClicked] = useState(false)
     const onClickLcate = ()=> {
-        router.push(`/notes/${lCateName}`)
+        router.push({
+            pathname:`/notes/${lCateName}`,
+            query:{
+                lCateId : lCateId
+            }
+        },`/notes/${lCateName}`)
     }
     const onClickPlus = () => {
         setClicked(prev=>!prev)
@@ -36,12 +41,10 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     }
     const onClickFoldBtn = () => {
         setLCateFold(prev=>!prev)
-        console.log(lCateId)
     }
     useEffect(()=>{
         axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/${lCateId}`)
         .then(response=>{
-            console.log("mcates",response)
             setMCates(response.data.mediumCates)
 
             const length = Number(response.data.mediumCates.length)

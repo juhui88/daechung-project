@@ -25,10 +25,20 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         
     }
     const onClickMcate = () => {
-        router.push(`/notes/${lCateName}/${mCateName}`)
+        router.push({
+            pathname:`/notes/${lCateName}/${mCateName}`,
+            query:{
+                mCateId : mCateId
+            }
+        },`/notes/${lCateName}/${mCateName}`)
     }
-    const onClickScate = (sCate) => {
-        router.push(`/notes/${lCateName}/${mCateName}/${sCate}`)
+    const onClickScate = (sCateName,sCateId) => {
+        router.push({
+            pathname:`/notes/${lCateName}/${mCateName}/${sCateName}`,
+            query:{
+                sCateId : sCateId
+            }
+        },`/notes/${lCateName}/${mCateName}/${sCateName}`)
     } 
 
 
@@ -53,7 +63,6 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/small-cates/${mCateId}`)
         .then(response=>{
             setSCates(response.data.smallcates)
-            console.log(response.data.smallcates)
         })
         .catch(error=>console.log(error))
     },[clicked])
@@ -81,8 +90,8 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         </div>
         <div>
             {mCateFold ?sCates.map((small, i) =>  
-            <div key = {i} onClick = {()=>onClickScate(small.name)}>
-                <SmallCategory name = {small.name} />
+            <div key = {i} onClick = {()=>onClickScate(small.name, small.id)}>
+                {<SmallCategory name = {small.name} />}
             </div>) :null}
             {clicked ? 
                 <form onSubmit={handleSubmit(onValid)} className="ml-8">
