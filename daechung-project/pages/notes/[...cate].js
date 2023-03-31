@@ -50,9 +50,6 @@ export default function LCateDetail({cate}) {
             axios({
                 method:"get",
                 url:url,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
-                }
             }).then(res=>{
                 setNotes(res.data.notes)
                 console.log(res.data.notes)

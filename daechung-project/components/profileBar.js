@@ -26,10 +26,10 @@ export default function ProfileBar({ children }) {
     }
  */
     const onClickAboutMe = () => {
-        router.push(`/profile/aboutMe`)
+        router.push(`/profile`)
     }
     const onClickProfile = () => {
-        router.push(`/profile`)
+        router.push(`/profile/editProfile`)
     }
     return (
         <div>
@@ -38,11 +38,11 @@ export default function ProfileBar({ children }) {
         </Link>
         <div className="flex ">
             <div className=" space-y-1">
-                <Item onClick={onClickProfile}>
-                    계정
-                </Item>
                 <Item onClick={onClickAboutMe}>
                     About me
+                </Item>
+                <Item onClick={onClickProfile}>
+                    계정
                 </Item>
                 <Item>
                     로그아웃
