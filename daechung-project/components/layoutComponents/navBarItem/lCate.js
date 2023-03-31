@@ -11,12 +11,11 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     const {register , handleSubmit,reset} = useForm();
     const [mCates, setMCates] = useState([])
     const [lCateFold, setLCateFold] = useState(lCateIsFold)
-    const [mCateFold, setMCateFold] = useState()
+    const [mCatesFold, setMCatesFold] = useState([])
     const [clicked, setClicked] = useState(false)
     const [isPost, setIsPost] = useState(false);
 
     const inputRef = useRef();
-
 
     const onClickLcate = ()=> {
         router.push({
@@ -39,7 +38,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
 
     const onValid = (data) => {
         console.log(data)
-        setClicked(false)
+        
 
         axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
         {
@@ -48,6 +47,8 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
         .catch(err=>console.log(err))
 
         reset();
+        
+        setClicked(false)
         console.log("isPost",isPost)
         setIsPost(prev=>!prev)
     }
@@ -57,15 +58,18 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     useEffect(()=>{
         axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`)
         .then(response=>{
-            setMCates(response.data.mediumCates)
+            if(response.data.mediumCates) {
+                setMCates(response.data.mediumCates)
 
-            const length = Number(response.data.mediumCates.length)
-            const falseList = Array(length).fill(false);
-            setMCateFold(falseList)
-
+                const length = Number(response.data.mediumCates.length)
+                const falseList = Array(length).fill(false);
+                setMCatesFold(falseList)
+            }
+            
         })
         .catch(error=>console.log(error))
-    },[ lCateFold, isPost])
+        console.log(isPost)
+    },[clicked, isPost, lCateFold])
 
     useEffect(()=> {
         if(inputRef.current && clicked ){
@@ -96,7 +100,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
         </div>
         <div>
             {lCateFold ? mCates.map((medium,i)=>  <div key = {i}>
-                <MediumCategory mCateName = {medium.name} mCateId = {medium.id} lCateName={lCateName} mCateIsFold = {mCateFold[i]}/>
+                <MediumCategory mCateName = {medium.name} mCateId = {medium.id} lCateName={lCateName} mCateIsFold = {mCatesFold[i]}/>
             </div>
            ) : null}
             {clicked ? 

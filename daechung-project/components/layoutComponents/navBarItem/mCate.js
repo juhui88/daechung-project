@@ -11,19 +11,22 @@ import SmallCategory from "./sCate"
 
 export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFold}) {
     const router = useRouter();
-    const {register, handleSubmit,reset} = useForm();
+    const {register, handleSubmit,reset} = useForm()
     const [sCates, setSCates] = useState([])
     const [mCateFold ,setMCateFold] = useState(mCateIsFold)
     const [clicked, setClicked] = useState(false)
-
+    const [isPost, setIsPost] = useState(false)
+    
     const onClickPlus = () => {
-        setClicked(prev=>!prev)
+        setClicked(true)
         setMCateFold(true)
-        if(clicked){
-            document.getElementsByClassName("z-10").focus()
-        }
-        
     }
+     const onClickFoldBtn = () => {
+        setMCateFold(prev=>!prev)
+        setClicked(false)
+    }
+
+
     const onClickMcate = () => {
         router.push({
             pathname:`/notes/${lCateName}/${mCateName}`,
@@ -32,6 +35,7 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
             }
         },`/notes/${lCateName}/${mCateName}`)
     }
+
     const onClickScate = (sCateName,sCateId) => {
         router.push({
             pathname:`/notes/${lCateName}/${mCateName}/${sCateName}`,
@@ -42,12 +46,11 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
     } 
 
 
-    const onClickFoldBtn = () => {
-        setMCateFold(prev=>!prev)
-    }
+   
     const onValid = (data) => {
         console.log(data)
-        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/small-cates/${mCateId}`,
+        if (sCates)
+        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`,
         {
             smallCateName: data.sName,
             startedAt : moment().format("YYYY-MM-DD"),
@@ -57,15 +60,23 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
 
         setClicked(false)
         reset()
+        setIsPost(prev=>!prev)
     }
 
     useEffect(()=>{
-        axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/small-cates/${mCateId}`)
+        axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`)
         .then(response=>{
-            setSCates(response.data.smallcates)
+            if (response.data.smallCates.length !== 0 ){
+                setSCates(response.data.smallCates)
+            }
+            
         })
         .catch(error=>console.log(error))
-    },[clicked])
+        console.log(mCateFold)
+        console.log("sCates",sCates)
+    },[clicked, isPost,mCateFold])
+
+    
 
     return (<div>
     <div className="text-gray-600  grid  gap-2  font-medium pl-1 group w-64 my-2">

@@ -27,7 +27,7 @@ export const FoldBtn = tw.button`
 export default function NavBar() {
     const router = useRouter();
     const [lcate, setLCate] = useState([])
-    const [lCateFold, setLCateFold] = useState()
+    const [lCatesFold, setLCatesFold] = useState()
 
     const onClickLFold = (i) => {
         setfold(
@@ -40,20 +40,23 @@ export default function NavBar() {
     useEffect(()=>{
         axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/large-cates`)
         .then(response=>{
-            setLCate(response.data.largeCates)
+            if (response.data.largeCates.length !== 0 ){
+                setLCate(response.data.largeCates)
 
-            const length = Number(response.data.largeCates.length)
-            const falseList = Array(length).fill(false);
-            setLCateFold(falseList)
+                const length = Number(response.data.largeCates.length)
+                const falseList = Array(length).fill(false);
+                setLCatesFold(falseList)
+            }
+            
         })
         .catch(error=>console.log(error))
-    },[lCateFold])
+    },[])
 
     
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
             {lcate.map((large,i )=><div key = {i}>
-            <LargeCategory lCateName= {large.name} lCateId = {large.id} isFold = {lCateFold[i]}/>
+            <LargeCategory lCateName= {large.name} lCateId = {large.id} isFold = {lCatesFold[i]}/>
         </div>)}
         </div>
     </div>
