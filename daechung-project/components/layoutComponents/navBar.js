@@ -47,7 +47,7 @@ export default function NavBar() {
             setLCateFold(falseList)
         })
         .catch(error=>console.log(error))
-    },[])
+    },[lCateFold])
 
     
     return <div className="relative w-64 h-full ">

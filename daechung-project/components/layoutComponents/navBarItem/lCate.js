@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { FoldBtn, PlusBtn } from "../navBar";
 import MediumCategory from "./mCate";
 import {cls} from "../../../libs/utils"
@@ -13,6 +13,11 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     const [lCateFold, setLCateFold] = useState(lCateIsFold)
     const [mCateFold, setMCateFold] = useState()
     const [clicked, setClicked] = useState(false)
+    const [isPost, setIsPost] = useState(false);
+
+    const inputRef = useRef();
+
+
     const onClickLcate = ()=> {
         router.push({
             pathname:`/notes/${lCateName}`,
@@ -21,29 +26,36 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
             }
         },`/notes/${lCateName}`)
     }
-    const onClickPlus = () => {
-        setClicked(prev=>!prev)
-        if(clicked){
-            document.getElementsByClassName("z-10").focus()
-        }
 
-        
+
+    const onClickPlus = () => {
+        setLCateFold(true)
+        setClicked(true)
     }
+    const onClickFoldBtn = () => {
+        setLCateFold(prev=>!prev)
+        setClicked(false)
+    }
+
     const onValid = (data) => {
         console.log(data)
         setClicked(false)
-        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/${lCateId}`,
+
+        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
         {
             mediumCateName: data.mName
         }).then(res=>console.log(res))
         .catch(err=>console.log(err))
+
         reset();
+        console.log("isPost",isPost)
+        setIsPost(prev=>!prev)
     }
-    const onClickFoldBtn = () => {
-        setLCateFold(prev=>!prev)
-    }
+
+    
+    
     useEffect(()=>{
-        axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/${lCateId}`)
+        axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`)
         .then(response=>{
             setMCates(response.data.mediumCates)
 
@@ -53,7 +65,13 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
 
         })
         .catch(error=>console.log(error))
-    },[clicked])
+    },[ lCateFold, isPost])
+
+    useEffect(()=> {
+        if(inputRef.current && clicked ){
+            inputRef.current.focus();
+        }
+    },[clicked,inputRef])
     return(
     <div>
         <div className="bg-itemBg p-2 pl-2 w-64 flex justify-between group hover:cursor-pointer font-semibold text-textPoint">
@@ -83,7 +101,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
            ) : null}
             {clicked ? 
                 <form onSubmit={handleSubmit(onValid)} className="ml-5">
-                    <input {...register("mName")} placeholder="입력해주세요" className="z-10 outline-none"/> 
+                    <input ref = {inputRef} {...register("mName")} placeholder="입력해주세요" className="z-10 outline-none focus:outline-dashed"/> 
                 </form>: null}    
         </div>        
     </div>
