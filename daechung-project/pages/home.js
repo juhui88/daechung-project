@@ -20,7 +20,7 @@ export default function Home() {
   const [notes, setNotes] = useState([])
 
   useEffect(()=>{
-     axios.get(`http://${process.env.NEXT_PUBLIC_API_URL}/notes/main`)
+     axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/notes/main`)
         .then(response=>{
           if(response.data.notes.length !== 0) {
             setNotes(response.data.notes)

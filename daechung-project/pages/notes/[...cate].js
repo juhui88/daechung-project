@@ -37,11 +37,11 @@ export default function LCateDetail({cate}) {
     useEffect(() => {
         let url = '';
         if (length === 1) {
-            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/large-cate-id/${router.query.lCateId}`;
+            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/large-cate-id/${router.query.lCateId}`;
         } else if (length === 2) {
-            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/medium-cate-id/${router.query.mCateId}`;
+            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/medium-cate-id/${router.query.mCateId}`;
         } else {
-            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/small-cate-id/${router.query.sCateId}`;
+            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/small-cate-id/${router.query.sCateId}`;
             setId(router.query.sCateId)
         }
         setUrl(url);
