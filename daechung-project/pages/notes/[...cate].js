@@ -55,6 +55,7 @@ export default function LCateDetail({cate}) {
                 }
             }).then(res=>{
                 setNotes(res.data.notes)
+                console.log(res.data.notes)
             })
             .catch(err=>console.log(err))
         }

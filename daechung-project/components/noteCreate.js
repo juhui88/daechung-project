@@ -42,7 +42,7 @@ export default function NoteCreate({sCateId, isPosting}) {
         console.log(data.files)
         const formData = new FormData();
         formData.append('content', data.content);
-        console.log(data.files.length)
+        console.log(formData)
         if (Array.from(data.files).length !== 0 ){
             Array.from(data.files).map(f=>formData.append('file', f))
         }
@@ -81,7 +81,7 @@ export default function NoteCreate({sCateId, isPosting}) {
                 
                     : null}
                     <label htmlFor="files">
-                         {previewImg.length !== 0 ? 
+                        {previewImg.length !== 0 ? 
                         <div className="relative  w-28 h-32 shadow-xl flex items-center">
                             <img src={previewImg[imgNum]} className="" />
                             <span className="absolute bottom-0 bg-itemBg px-1 rounded-md text-textPoint font-bold right-2">{imgNum+1}/{previewImg.length}</span>
@@ -89,8 +89,7 @@ export default function NoteCreate({sCateId, isPosting}) {
                         :
                         <div className="w-28 h-32 flex justify-center items-center shadow-xl cursor-pointer ">
                             <span className="text-5xl font-bold text-gray-500 ">+</span>
-                        </div>}
-                        
+                        </div>} 
                     
                     </label>   
                     <input id="files" {...register("files")} type="file" className="hidden" onChange={(e)=>insertImg(e)} multiple/> 
