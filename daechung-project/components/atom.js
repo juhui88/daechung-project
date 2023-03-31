@@ -14,3 +14,8 @@ export const sCateIdState = atom({
   key: 'sCateIdState', 
   default: '', 
 });
+
+export const sequenceState = atom({
+  key: "sequenceState",
+  default: "wrt"
+})
