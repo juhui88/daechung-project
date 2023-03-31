@@ -1,11 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { useRouter } from "next/router";
-import { tokenState } from "@/components/atom";
-import CalendarBar from "@/components/layoutComponents/calendar";
-import NavBar from "@/components/layoutComponents/navBar";
 import Layout from "@/components/laytout";
+import Note from "@/components/note";
 
 axios.interceptors.request.use(
   function (config) {
@@ -21,15 +17,32 @@ axios.interceptors.request.use(
 
 
 export default function Home() {
-    const router = useRouter();
-    const [token, setToken] = useRecoilState(tokenState)
+  const [notes, setNotes] = useState([])
+
+  useEffect(()=>{
+     axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/notes/main`)
+        .then(response=>{
+          if(response.data.notes.length !== 0) {
+            setNotes(response.data.notes)
+            
+          }
+          console.log(response.data)
+        })
+        .catch(error=>console.log(error))
+  },[useState])
+
 
     return (
-        <div>
-            <Layout>
-              djfs
-            </Layout>
+      <Layout>
+        <div className="pl-8 pr-28 "> 
+          {notes.map((note,i)=><div key={i}>
+            <Note content={note.content}/>
+            </div>)}
         </div>
+        
+        
+      </Layout>
+
     )
     
     

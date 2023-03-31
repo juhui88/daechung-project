@@ -1,7 +1,6 @@
 import Router from "next/router";
 import Link from "next/link";
 
-export const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback";
 
 export default function Login() {
     return (

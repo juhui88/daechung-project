@@ -9,7 +9,7 @@ bg-itemBg p-2 pl-2 w-64 flex justify-between group hover:cursor-pointer font-sem
 `
 export default function ProfileBar({ children }) {
     const router = useRouter()
-    const onClick = () => {
+    /* const onClick = () => {
         axios({
             method: "POST",
             url: `https://kapi.kakao.com/v1/user/logout?taraget_id_type=user_id&target_id=${localStorage.getItem("id")}`,
@@ -24,12 +24,12 @@ export default function ProfileBar({ children }) {
             
         })
     }
-
+ */
     const onClickAboutMe = () => {
-        router.push(`/profile/aboutMe`)
+        router.push(`/profile`)
     }
     const onClickProfile = () => {
-        router.push(`/profile`)
+        router.push(`/profile/editProfile`)
     }
     return (
         <div>
@@ -38,13 +38,13 @@ export default function ProfileBar({ children }) {
         </Link>
         <div className="flex ">
             <div className=" space-y-1">
-                <Item onClick={onClickProfile}>
-                    계정
-                </Item>
                 <Item onClick={onClickAboutMe}>
                     About me
                 </Item>
-                <Item onClick={onClick}>
+                <Item onClick={onClickProfile}>
+                    계정
+                </Item>
+                <Item>
                     로그아웃
                 </Item>    
             </div>

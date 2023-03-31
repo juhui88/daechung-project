@@ -1,7 +1,21 @@
-import {atom, selector} from 'recoil'
-import { v1 } from 'uuid';
+import {atom} from 'recoil'
 
-export const tokenState = atom({
-    key: "tokenState",
-    default: ""
+export const lCateIdState = atom({
+  key: 'lCateIdState', 
+  default: '', 
+});
+
+export const mCateIdState = atom({
+  key: 'mCateIdState', 
+  default: '', 
+});
+
+export const sCateIdState = atom({
+  key: 'sCateIdState', 
+  default: '', 
+});
+
+export const sequenceState = atom({
+  key: "sequenceState",
+  default: "wrt"
 })

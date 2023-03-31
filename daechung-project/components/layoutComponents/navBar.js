@@ -3,7 +3,6 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import tw from "tailwind-styled-components"
-import { lCateFoldState } from "../atom"
 import LargeCategory from "./navBarItem/lCate"
 import MediumCategory from "./navBarItem/mCate"
 
@@ -21,54 +20,15 @@ export const FoldBtn = tw.button`
     group-hover:opacity-100
     group-hover:duration-300
     pr-3
-    text-gray-600
+    text-gray-500
+    hover:text-black
 `
-const LCate = [
-    {
-        name: "교과",
-        mediumCates: [
-            {
-                name: "1학년1학기"
-            },
-            {
-                name: "1학년2학기"
-            },
-            {
-                name: "2학년 1학기"
-            },
-
-        ]
-    },
-    {
-        name: "비교과",
-        mediumCates: [
-            {
-                name: "학회 TAB"
-            },
-            {
-                name: "UMC"
-            },
-
-        ]
-    },
-    {
-        name: "기타",
-        mediumCates: [
-            {
-                name: "어쩌구저쩌구 공모전"
-            },
-            {
-                name: "어쩌구저쩌구 서포터즈"
-            },
-
-        ]
-    },
-]
 
 export default function NavBar() {
     const router = useRouter();
     const [lcate, setLCate] = useState([])
-    const [menuIsOpen , setMenuIsOpen] = useState(false);
+    const [lCatesFold, setLCatesFold] = useState()
+
     const onClickLFold = (i) => {
         setfold(
             fold.map(item=>
@@ -76,23 +36,18 @@ export default function NavBar() {
         )
     }
 
-    const handleMenu = () => {
-        setMenuIsOpen(prev => !prev)
-    }
-    const onClickLcate = (name) => {
-        router.push(`/notes/${name}`);
-    }
-    const onClickMcate = (lcateName, mCateName) => {
-        router.push(`/notes/${lcateName}/${mCateName}`);
-    }
 
     useEffect(()=>{
         axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/large-cates`)
         .then(response=>{
-            setLCate(response.data.largeCates)
-            console.log(response.data.largeCates)
-            /* const falseList = (response.data.length).fill(false);
-            setLCate(falseList) */
+            if (response.data.largeCates.length !== 0 ){
+                setLCate(response.data.largeCates)
+
+                const length = Number(response.data.largeCates.length)
+                const falseList = Array(length).fill(false);
+                setLCatesFold(falseList)
+            }
+            
         })
         .catch(error=>console.log(error))
     },[])
@@ -100,8 +55,8 @@ export default function NavBar() {
     
     return <div className="relative w-64 h-full ">
         <div className="grid gap-2">
-            {LCate.map((large,i )=><div> {/* 백엔드 안정화되면 수정 */}
-            <LargeCategory lCateName= {large.name} mCates = {large.mediumCates}/>
+            {lcate.map((large,i )=><div key = {i}>
+            <LargeCategory lCateName= {large.name} lCateId = {large.id} isFold = {lCatesFold[i]}/>
         </div>)}
         </div>
     </div>

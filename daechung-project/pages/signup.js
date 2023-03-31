@@ -39,9 +39,14 @@ const ProfileImg = tw.button`
 
 export default function Signup() {
     const {register, handleSubmit, formState:{errors}} = useForm();
-    const [profileImgNum, setProfileImgNum] = useState(0);
+    const [profileImgNum, setProfileImgNum] = useState(1);
     const router = useRouter();
-    const token = router.query.token
+    const token = router.query.token;
+    
+    
+    const onClickProfileImg = (num)=>{
+        setProfileImgNum(num);
+    }
     const onValid = (data) => {
         console.log(data); // 나중에 여기서 백엔드로 옮기기
         axios.post(
@@ -51,7 +56,7 @@ export default function Signup() {
                 studentNumber: Number(data.stuId),
                 major1:data.major1,
                 major2:data.major2 ? data.major2 : "",
-                profileImgUrl:"dfdsfsfa",//이미지 무조건 있게
+                profileImgUrl:`profile_${profileImgNum}`,//이미지 무조건 있게
             },
             {
                 headers: {
@@ -121,17 +126,17 @@ export default function Signup() {
                 <Image src = "/하트.png" className=" object-contain" width={40} height={30}/>
             </div> 
         </div>
-        <div className="bg-bgPoint lg:flex-grow w-1/6">
+        <div className="bg-bgPoint lg:flex-grow lg:w-1/6">
             <div className="p-10 text-3xl font-extrabold text-gray-500">
                 <span>프로필을 선택하세요 :&#41;</span>
             </div>
             <div className="p-10 gap-8 grid grid-cols-3 justify-items-center ">
-                <ProfileImg className="bg-[url('../public/profileImgs/profile_1.png')]" />
-                <ProfileImg className="bg-[url('../public/profileImgs/profile_2.png')]" />
-                <ProfileImg className="bg-[url('../public/profileImgs/profile_3.png')]" />
-                <ProfileImg className="bg-[url('../public/profileImgs/profile_4.png')]" />
-                <ProfileImg className="bg-[url('../public/profileImgs/profile_5.png')]" />
-                <ProfileImg className="bg-[url('../public/profileImgs/profile_6.png')]" />
+                <ProfileImg onClick={()=>onClickProfileImg(1)} className="bg-[url('../public/profileImgs/profile_1.png')]" />
+                <ProfileImg onClick={()=>onClickProfileImg(2)} className="bg-[url('../public/profileImgs/profile_2.png')]" />
+                <ProfileImg onClick={()=>onClickProfileImg(3)} className="bg-[url('../public/profileImgs/profile_3.png')]" />
+                <ProfileImg onClick={()=>onClickProfileImg(4)} className="bg-[url('../public/profileImgs/profile_4.png')]" />
+                <ProfileImg onClick={()=>onClickProfileImg(5)} className="bg-[url('../public/profileImgs/profile_5.png')]" />
+                <ProfileImg onClick={()=>onClickProfileImg(6)} className="bg-[url('../public/profileImgs/profile_6.png')]" />
             </div>
         </div>
     </div>

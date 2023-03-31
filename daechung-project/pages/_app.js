@@ -10,7 +10,6 @@ export default function App({ Component, pageProps }) {
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
      <Head>
-    <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet"></link>
   </Head>
   <Component {...pageProps} />  
