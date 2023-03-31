@@ -3,11 +3,12 @@ import { useState } from "react"
 import { useForm } from "react-hook-form";
 
 
-export default function NoteCreate({sCateId, propFunction}) {
+export default function NoteCreate({sCateId}) {
     const [ img, setImg ] = useState([])
     const [ previewImg, setPreviewImg ] = useState([])
     const [imgNum, setImgNum] = useState(0);
     const {register,reset, handleSubmit} = useForm()
+    const [files, setFiles] = useState()
 
     axios.interceptors.request.eject()
     console.log("sCateID",sCateId)
@@ -40,11 +41,10 @@ export default function NoteCreate({sCateId, propFunction}) {
 
     const onValid = (data) => {
         console.log(data)
-        
-        const formData = new FormData();
+       /*  const formData = new FormData();
         formData.append('content', data.content);
-        if (data.file.length !== 0 ){
-            Array.from(data.file).map(f=>formData.append('file', f))
+        if (previewImg.length !== 0 ){
+            previewImg.map(f=>formData.append('file', f))
         }
         
          axios({
@@ -55,47 +55,13 @@ export default function NoteCreate({sCateId, propFunction}) {
             },
             data:formData
         }).then(res=>console.log(res))
-        .catch(err=>console.log(err))
-
-        /* propFunction(true) */
+        .catch(err=>console.log(err)) 
         
         reset() 
-        setPreviewImg([])
-        /* 
-        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sCateId}`,).then(res=>console.log(res))
-        .catch(err=>console.log(err))
-         */
+        setPreviewImg([])*/
     }
     return <div className="flex h-32">
-            {/* {previewImg.length !== 0 && imgNum !== 0 ? 
-                <span onClick={onClickNumDown} className="absolute left-0 text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                    </svg>
-                </span>
-            
-            : null}
-            {previewImg.length > 1 && imgNum !== previewImg.length-1 ? 
-                <span onClick={onClickNumUp} className=" absolute right-0 text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
-                </span>
-                
-            : null} */}
-            {/* <label className="relative flex items-center justify-center cursor-pointer shadow-2xl w-28 bg-white h-32">
-            {previewImg.length !== 0 ? 
-                <div className="relative  w-28 h-32 ">
-                    <img src={previewImg[imgNum]} className="bg-contain h-full" />
-                    <span className="absolute right-0 bottom-0 bg-white px-3 text-sm font-bold text-textPoint shadow-md">{imgNum+1}/{previewImg.length}</span>
-                </div>
-                :
-                <span className="font-extrabold text-4xl  text-gray-500 ">+</span>}
-                <input type="file" className="hidden" onChange={(e)=>insertImg(e)} multiple/>
-            </label>    */}
-
-        
-        <form className="w-full" onSubmit={handleSubmit(onValid)} encType="multipart/form-data">
+        <form className="w-full" onSubmit={handleSubmit(onValid)} >
             <div className="flex space-x-2 ">
                 <div className=" w-40 relative flex items-center justify-center ">
                     {previewImg.length !== 0 && imgNum !== 0 ? 
@@ -114,8 +80,8 @@ export default function NoteCreate({sCateId, propFunction}) {
                     </span>
                 
                     : null}
-                    <label>
-                        {previewImg.length !== 0 ? 
+                    <label htmlFor="files">
+                        {/* previewImg.length !== 0 ? 
                         <div className="relative  w-28 h-32 shadow-xl flex items-center">
                             <img src={previewImg[imgNum]} className="" />
                             <span className="absolute bottom-0 bg-itemBg px-1 rounded-md text-textPoint font-bold right-2">{imgNum+1}/{previewImg.length}</span>
@@ -123,20 +89,19 @@ export default function NoteCreate({sCateId, propFunction}) {
                         :
                         <div className="w-28 h-32 flex justify-center items-center shadow-xl cursor-pointer ">
                             <span className="text-5xl font-bold text-gray-500 ">+</span>
-                        </div>
-                        }
-
-                        <input {...register("file")} type="file" className="hidden" onChange={(e)=>insertImg(e)} multiple/>
-                    </label>    
+                        </div> */
+                        }+
+                    
+                    </label>   
+                    <input id="files" {...register("files")} type="file" className="" onChange={(e)=>insertImg(e)} multiple/> 
                 </div>
                 
                 <div className="flex-1 ">
-                <input {...register("content")} type="text" className="border border-gray-400 text-sm h-32 p-1 w-full break-all normal-nums" rows={3} />        
+                    <input {...register("content")} type="text" className="border border-gray-400 text-sm h-32 p-1 w-full break-all normal-nums" rows={3} />        
                 </div>
                 
             </div>
             
-            <button className="hidden"/>
         </form>
     </div>
 }

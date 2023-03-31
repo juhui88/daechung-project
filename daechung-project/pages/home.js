@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Layout from "@/components/laytout";
 import NoteCreate from "@/components/noteCreate";
 import Note from "@/components/note";
+import { useForm } from "react-hook-form";
 
 axios.interceptors.request.use(
   function (config) {
@@ -23,8 +24,12 @@ export default function Home() {
   const [lCateIds, setLCateIds] = useState([])
   const [isInitialMount, setIsInitialMount] = useState(true);
   const [notes, setNotes] = useState([])
+  const {register, handleSubmit} = useForm()
   
-    useEffect(()=>{
+  const onValid = (data) => {
+    console.log(data)
+  }
+    /* useEffect(()=>{
       if(isInitialMount){
         setIsInitialMount(false)
       }else{
@@ -46,17 +51,28 @@ export default function Home() {
 
       }
         
-    },[isInitialMount])
+    },[isInitialMount]) */
 
 
     return (
       <Layout>
         <div className="pl-8 pr-28 "> 
-        {/* {notes[0].map(i=><Note content={i.content}/>)}
-        {notes[1].map(i=><Note content={i.content}/>)}
-        {notes[2].map(i=><Note content={i.content}/>)} */}
-        {[1,2,3].map(i=><Note content={i} />)}
-        
+        <NoteCreate/>
+        {/* <form onSubmit={handleSubmit(onValid)}>
+          
+            <div>
+              <div>
+                <label>
+                   <input type="file" {...register("file")}/>
+            <button>시발
+
+            </button>
+                </label>
+              </div>
+            </div>
+           
+          
+        </form> */}
         </div>
         
         
