@@ -3,15 +3,14 @@ import { useState } from "react"
 import { useForm } from "react-hook-form";
 
 
-export default function NoteCreate({sCateId}) {
+export default function NoteCreate({sCateId, isPosting}) {
     const [ img, setImg ] = useState([])
     const [ previewImg, setPreviewImg ] = useState([])
     const [imgNum, setImgNum] = useState(0);
     const {register,reset, handleSubmit} = useForm()
     const [files, setFiles] = useState()
-
+    
     axios.interceptors.request.eject()
-    console.log("sCateID",sCateId)
     const insertImg = (e) => {
         const fileArr = e.target.files;
 
@@ -40,25 +39,26 @@ export default function NoteCreate({sCateId}) {
     }
 
     const onValid = (data) => {
-        console.log(data)
-       /*  const formData = new FormData();
+        console.log(data.files)
+        const formData = new FormData();
         formData.append('content', data.content);
-        if (previewImg.length !== 0 ){
-            previewImg.map(f=>formData.append('file', f))
+        console.log(data.files.length)
+        if (Array.from(data.files).length !== 0 ){
+            Array.from(data.files).map(f=>formData.append('file', f))
         }
         
          axios({
             method:"post",
-            url:`http://${process.env.NEXT_PUBLIC_API_URL}/notes/${sCateId}`,
+            url:`http://${process.env.NEXT_PUBLIC_API_URL}/notes/small-cate-id/${sCateId}`,
             headers:{
                 'Content-Type': 'multipart/form-data',
             },
             data:formData
-        }).then(res=>console.log(res))
+        }).then(res=>console.log("notecreate",res))
         .catch(err=>console.log(err)) 
-        
         reset() 
-        setPreviewImg([])*/
+        setPreviewImg([])
+        isPosting()
     }
     return <div className="flex h-32">
         <form className="w-full" onSubmit={handleSubmit(onValid)} >
@@ -81,7 +81,7 @@ export default function NoteCreate({sCateId}) {
                 
                     : null}
                     <label htmlFor="files">
-                        {/* previewImg.length !== 0 ? 
+                         {previewImg.length !== 0 ? 
                         <div className="relative  w-28 h-32 shadow-xl flex items-center">
                             <img src={previewImg[imgNum]} className="" />
                             <span className="absolute bottom-0 bg-itemBg px-1 rounded-md text-textPoint font-bold right-2">{imgNum+1}/{previewImg.length}</span>
@@ -89,11 +89,11 @@ export default function NoteCreate({sCateId}) {
                         :
                         <div className="w-28 h-32 flex justify-center items-center shadow-xl cursor-pointer ">
                             <span className="text-5xl font-bold text-gray-500 ">+</span>
-                        </div> */
-                        }+
+                        </div>}
+                        
                     
                     </label>   
-                    <input id="files" {...register("files")} type="file" className="" onChange={(e)=>insertImg(e)} multiple/> 
+                    <input id="files" {...register("files")} type="file" className="hidden" onChange={(e)=>insertImg(e)} multiple/> 
                 </div>
                 
                 <div className="flex-1 ">

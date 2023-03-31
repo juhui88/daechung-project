@@ -5,6 +5,17 @@ import Layout from "../../components/laytout"
 import Note from "../../components/note"
 import NoteCreate from "../../components/noteCreate"
 
+axios.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
+    config.headers['Content-Type'] = 'application/json';
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 export default function LCateDetail({cate}) {
     const router = useRouter()
@@ -16,17 +27,17 @@ export default function LCateDetail({cate}) {
     const [isPost, setIsPost] = useState(false)
 
 
-    const Post = (bool)=> {
-        console.log("bool",bool)
+    const isPosting = ()=> {
+        setIsPost(prev=>!prev)
     }
     useEffect(() => {
         let url = '';
         if (length === 1) {
-            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/wrt/large-cate/${router.query.lCateId}`;
+            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/wrt/large-cate-id/${router.query.lCateId}`;
         } else if (length === 2) {
-            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/wrt/medium-cate/${router.query.mCateId}`;
+            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/wrt/medium-cate-id/${router.query.mCateId}`;
         } else {
-            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/wrt/small-cate/${router.query.sCateId}`;
+            url = `http://${process.env.NEXT_PUBLIC_API_URL}/notes/wrt/small-cate-id/${router.query.sCateId}`;
             setId(router.query.sCateId)
         }
         setUrl(url);
@@ -43,13 +54,12 @@ export default function LCateDetail({cate}) {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
                 }
             }).then(res=>{
-                console.log("응답",res)
                 setNotes(res.data.notes)
             })
             .catch(err=>console.log(err))
         }
         
-    },[url, isInitialMount,axios]) 
+    },[url, isInitialMount,axios,isPost]) 
     return <Layout>
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
@@ -71,8 +81,8 @@ export default function LCateDetail({cate}) {
                 
             </div>
             <div>
-            {cate.length === 3 ?<NoteCreate sCateId={id}/> :null}
-            {notes.map((n,i)=><div key = {i}><Note content={n.content} /* propFunction={Post} *//></div>) }
+            {cate.length === 3 ?<NoteCreate sCateId={id} isPosting={isPosting}/> :null}
+            {notes.map((n,i)=><div key = {i}><Note content={n.content}/></div>) }
             </div>
             
         </div>
