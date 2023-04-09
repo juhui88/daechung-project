@@ -1,4 +1,4 @@
-import { sequenceState } from "@/components/atom";
+import { changeState, sequenceState } from "@/components/atom";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -29,6 +29,8 @@ export default function LCateDetail({cate}) {
     const [isPost, setIsPost] = useState(false)
 
     const [sequence, setSequence] = useRecoilState(sequenceState)
+
+    const [isChange, setIsChange] = useRecoilState(changeState);
 
 
     const isPosting = ()=> {
@@ -61,7 +63,7 @@ export default function LCateDetail({cate}) {
             .catch(err=>console.log(err))
         }
         
-    },[url, isInitialMount,axios,isPost, sequence]) 
+    },[url, isInitialMount,axios,isPost, sequence, isChange]) 
     return <Layout>
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">

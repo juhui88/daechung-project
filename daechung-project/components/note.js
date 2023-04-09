@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useRecoilState } from "recoil";
+import { changeState } from "./atom";
 
 export default function Note({content, id}) {
     const {register, reset, handleSubmit } = useForm()
     const [modifyClick, setModifyClick] = useState(false);
+
+    const [change, setChange] = useRecoilState(changeState);
 
     const onClickModify = () => {
         setModifyClick(prev => !prev)
@@ -14,10 +18,11 @@ export default function Note({content, id}) {
     const onClickDelete = () => {
         axios({
             method:"delete",
-            url:`${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
+            url:`${process.env.NEXT_PUBLIC_API_URL}/notes/note-id/${id}`,
         }).then(res=>console.log(res))
         .catch(err=>console.log(err)) 
-        
+        setChange(prev=>!prev)
+        console.log(change)
     }
 
     return<div className="flex h-32 space-x-2 mt-3 ">
