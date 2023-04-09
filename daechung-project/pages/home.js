@@ -20,7 +20,7 @@ export default function Home() {
   const [notes, setNotes] = useState([])
 
   useEffect(()=>{
-     axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/notes/main`)
+     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notes/main`)
         .then(response=>{
           if(response.data.notes.length !== 0) {
             setNotes(response.data.notes)
@@ -36,7 +36,7 @@ export default function Home() {
       <Layout>
         <div className="pl-8 pr-28 "> 
           {notes.map((note,i)=><div key={i}>
-            <Note content={note.content}/>
+            <Note content={note.content} id = {note.id}/>
             </div>)}
         </div>
         

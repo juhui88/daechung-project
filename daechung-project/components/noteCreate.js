@@ -49,7 +49,7 @@ export default function NoteCreate({sCateId, isPosting}) {
         
          axios({
             method:"post",
-            url:`https://${process.env.NEXT_PUBLIC_API_URL}/notes/small-cate-id/${sCateId}`,
+            url:`${process.env.NEXT_PUBLIC_API_URL}/notes/small-cate-id/${sCateId}`,
             headers:{
                 'Content-Type': 'multipart/form-data',
             },

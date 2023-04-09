@@ -40,7 +40,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
         console.log(data)
         
 
-        axios.post(`https://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
+        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
         {
             mediumCateName: data.mName
         }).then(res=>console.log(res))
@@ -56,7 +56,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     
     
     useEffect(()=>{
-        axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`)
         .then(response=>{
             if(response.data.mediumCates) {
                 setMCates(response.data.mediumCates)

@@ -10,7 +10,7 @@ export default function AboutMe(){
     useEffect(()=> {
         axios({
             method:"get",
-            url:`https://${process.env.NEXT_PUBLIC_API_URL}/users/me`,
+            url:`${process.env.NEXT_PUBLIC_API_URL}/users/me`,
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("token")}`,
             }
@@ -23,7 +23,7 @@ export default function AboutMe(){
     useEffect(()=> {
         axios({
             method:"get",
-            url:`https://${process.env.NEXT_PUBLIC_API_URL}/small-cates/by-year`,
+            url:`${process.env.NEXT_PUBLIC_API_URL}/small-cates/by-year`,
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("token")}`,
             }

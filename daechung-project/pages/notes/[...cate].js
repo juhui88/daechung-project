@@ -37,11 +37,11 @@ export default function LCateDetail({cate}) {
     useEffect(() => {
         let url = '';
         if (length === 1) {
-            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/large-cate-id/${router.query.lCateId}`;
+            url = `${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/large-cate-id/${router.query.lCateId}`;
         } else if (length === 2) {
-            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/medium-cate-id/${router.query.mCateId}`;
+            url = `${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/medium-cate-id/${router.query.mCateId}`;
         } else {
-            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/small-cate-id/${router.query.sCateId}`;
+            url = `${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/small-cate-id/${router.query.sCateId}`;
             setId(router.query.sCateId)
         }
         setUrl(url);
@@ -84,7 +84,7 @@ export default function LCateDetail({cate}) {
             </div>
             <div>
             {cate.length === 3 ?<NoteCreate sCateId={id} isPosting={isPosting}/> :null}
-            {notes.map((n,i)=><div key = {i}><Note content={n.content}/></div>) }
+            {notes.map((n,i)=><div key = {i}><Note content={n.content} id ={n.id}/></div>) }
             </div>
             
         </div>

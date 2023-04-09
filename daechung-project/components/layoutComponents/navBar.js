@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import tw from "tailwind-styled-components"
 import LargeCategory from "./navBarItem/lCate"
 import MediumCategory from "./navBarItem/mCate"
+import ModifyButton from "./navBarItem/modifyBtn"
 
 export const PlusBtn = tw.button`
     opacity-0
@@ -38,7 +39,7 @@ export default function NavBar() {
 
 
     useEffect(()=>{
-        axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/large-cates`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/large-cates`)
         .then(response=>{
             if (response.data.largeCates.length !== 0 ){
                 setLCate(response.data.largeCates)
@@ -58,6 +59,9 @@ export default function NavBar() {
             {lcate.map((large,i )=><div key = {i}>
             <LargeCategory lCateName= {large.name} lCateId = {large.id} isFold = {lCatesFold[i]}/>
         </div>)}
+        </div>
+        <div className="absolute -top-10 right-0">
+            <ModifyButton/>
         </div>
     </div>
 }

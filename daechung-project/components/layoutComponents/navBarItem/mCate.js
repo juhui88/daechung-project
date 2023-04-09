@@ -50,7 +50,7 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
     const onValid = (data) => {
         console.log(data)
         if (sCates)
-        axios.post(`https://${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`,
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`,
         {
             smallCateName: data.sName,
             startedAt : moment().format("YYYY-MM-DD"),
@@ -64,7 +64,7 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
     }
 
     useEffect(()=>{
-        axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`)
         .then(response=>{
             if (response.data.smallCates.length !== 0 ){
                 setSCates(response.data.smallCates)

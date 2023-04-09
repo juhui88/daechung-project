@@ -11,7 +11,7 @@ export default function GetToken() {
     useEffect(() => {
         code = new URL(window.location.href).searchParams.get('code')
         async function getToken(){
-            await axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/auth/kakao/callback?code=${code}`)
+            await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/kakao/callback?code=${code}`)
             .then(res=>{
                 localStorage.setItem("token",res.data.token)
                 if(res.data.isActive){
