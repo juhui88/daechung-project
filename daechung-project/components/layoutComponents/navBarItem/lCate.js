@@ -40,7 +40,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
         console.log(data)
         
 
-        axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
         {
             mediumCateName: data.mName
         }).then(res=>console.log(res))
