@@ -36,7 +36,10 @@ export default function Note({content, id}) {
                 'Content-Type': 'multipart/form-data',
             },
             data:formData
-        }).then(res=>console.log("노트수정",res))
+        }).then(res=>{
+            console.log("노트수정",res)
+            setCont(data.content)
+        })
         .catch(err=>console.log(err)) 
         setModifyClick(false)
 
@@ -63,7 +66,7 @@ export default function Note({content, id}) {
                 <form onSubmit={handleSubmit(onValid)} className="">
                     <input  placeholder = {cont} className="font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
                 </form>
-                :<span className="text-sm">{cont} </span>}
+                :<span className="text-sm">{content} </span>}
                 
             </div>
             

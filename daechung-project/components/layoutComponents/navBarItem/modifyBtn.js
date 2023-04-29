@@ -20,12 +20,9 @@ export default function ModifyButton() {
             ...
         </div>
         {modiBtnClicked ?
-        <div className="border-[1px] w-32 bg-white absolute right-5 -top-10 cursor-pointer">
+        <div className="border-[1px] w-32 bg-white absolute right-2 -top-3 cursor-pointer">
             <div className="border-b-[1px]" onClick={onClickDelte}>
                 <span className="pl-2">삭제하기</span>
-            </div>
-            <div>
-                <span className="pl-2">순서 바꾸기</span>
             </div>
         </div>
         :null}

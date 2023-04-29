@@ -26,16 +26,12 @@ export default function LCateDetail({cate}) {
     const [isInitialMount, setIsInitialMount] = useState(true);
     const [id, setId] = useState()
     const length = cate.length
-    const [isPost, setIsPost] = useState(false)
 
     const [sequence, setSequence] = useRecoilState(sequenceState)
 
-    const [isChange, setIsChange] = useRecoilState(changeState);
+    const [change, setChange] = useRecoilState(changeState);
 
 
-    const isPosting = ()=> {
-        setIsPost(prev=>!prev)
-    }
     useEffect(() => {
         let url = '';
         if (length === 1) {
@@ -53,17 +49,21 @@ export default function LCateDetail({cate}) {
         if (isInitialMount){
             setIsInitialMount(false)
         } else {
-            axios({
-                method:"get",
-                url:url,
-            }).then(res=>{
-                setNotes(res.data.notes)
-                console.log(res.data.notes)
-            })
-            .catch(err=>console.log(err))
+            const axiosData = async() => {
+                await axios({
+                    method:"get",
+                    url:url,
+                }).then(res=>{
+                    setNotes(res.data.notes)
+                    console.log(res.data.notes)
+                })
+                .catch(err=>console.log(err))
+            }
+            
+            axiosData()
         }
         
-    },[url, isInitialMount,axios,isPost, sequence, isChange]) 
+    },[url, isInitialMount,axios, sequence, change,setChange]) 
     return <Layout>
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
@@ -85,7 +85,7 @@ export default function LCateDetail({cate}) {
                 
             </div>
             <div>
-            {cate.length === 3 ?<NoteCreate sCateId={id} isPosting={isPosting}/> :null}
+            {cate.length === 3 ?<NoteCreate sCateId={id} /> :null}
             {notes.map((n,i)=><div key = {i}><Note content={n.content} id ={n.id}/></div>) }
             </div>
             
