@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRecoilState } from "recoil"
 import tw from "tailwind-styled-components"
-import { deleteState, mCateFoldState } from "../../atom"
+import { changeState, deleteState, mCateFoldState } from "../../atom"
 import { FoldBtn, PlusBtn } from "../navBar"
 import SmallCategory from "./sCate"
 
@@ -18,10 +18,14 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
     const [isPost, setIsPost] = useState(false)
     
     const [isDelete, setIsDelete] = useRecoilState(deleteState);
+    const [change, setChange] = useRecoilState(changeState)
 
     const onClickDelte = () => {
         axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/medium-cates/medium-cate-id/${mCateId}`)
-        .then(res=>console.log(res))
+        .then(res=>{
+            console.log(res)
+            setChange(prev=>!prev)
+        })
         .catch(err=>console.log(err))
         setIsDelete(false)
     }
@@ -45,15 +49,6 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         },`/notes/${lCateName}/${mCateName}`)
     }
 
-    const onClickScate = (sCateName,sCateId) => {
-        router.push({
-            pathname:`/notes/${lCateName}/${mCateName}/${sCateName}`,
-            query:{
-                sCateId : sCateId
-            }
-        },`/notes/${lCateName}/${mCateName}/${sCateName}`)
-    } 
-
 
    
     const onValid = (data) => {
@@ -64,7 +59,10 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
             smallCateName: data.sName,
             startedAt : moment().format("YYYY-MM-DD"),
             endedAt: moment().format("YYYY-MM-DD")
-        }).then(res=>console.log(res))
+        }).then(res=>{
+            console.log(res)
+            setChange(prev => !prev)
+        })
         .catch(err=>console.log(err))
 
         setClicked(false)
@@ -83,7 +81,7 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         .catch(error=>console.log(error))
         console.log(mCateFold)
         console.log("sCates",sCates)
-    },[clicked, isPost,mCateFold,isDelete])
+    },[clicked, isPost,mCateFold,isDelete, change, setChange])
 
     
 
@@ -117,8 +115,8 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         </div>
         <div>
             {mCateFold ?sCates.map((small, i) =>  
-            <div key = {i} onClick = {()=>onClickScate(small.name, small.id)}>
-                {<SmallCategory name = {small.name} id = {small.id}/>}
+            <div className="" key = {i} >
+                {<SmallCategory name = {small.name} id = {small.id} lCateName = {lCateName} mCateName = {mCateName}/>}
             </div>) :null}
             {clicked ? 
                 <form onSubmit={handleSubmit(onValid)} className="ml-8">

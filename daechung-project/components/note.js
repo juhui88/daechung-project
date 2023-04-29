@@ -4,11 +4,9 @@ import { useForm } from "react-hook-form"
 import { useRecoilState } from "recoil";
 import { changeState } from "./atom";
 
-export default function Note({content, id}) {
+export default function Note({content, id, date}) {
     const {register, reset, handleSubmit } = useForm()
     const [modifyClick, setModifyClick] = useState(false);
-    const [cont, setCont] = useState(content)
-
     const [change, setChange] = useRecoilState(changeState);
 
     const onClickModify = () => {
@@ -20,15 +18,17 @@ export default function Note({content, id}) {
         axios({
             method:"delete",
             url:`${process.env.NEXT_PUBLIC_API_URL}/notes/note-id/${id}`,
-        }).then(res=>console.log(res))
+        }).then(res=>{
+            console.log(res)
+            setChange(prev=>!prev)
+        })
         .catch(err=>console.log(err)) 
-        setChange(prev=>!prev)
+        
         console.log(change)
     }
     const onValid = (data) => {
         const formData = new FormData();
         formData.append('content', data.content);
-        setCont(data.content)
         axios({
             method:"put",
             url:`${process.env.NEXT_PUBLIC_API_URL}/notes/content/${id}`,
@@ -38,7 +38,7 @@ export default function Note({content, id}) {
             data:formData
         }).then(res=>{
             console.log("노트수정",res)
-            setCont(data.content)
+            setChange(prev=>!prev)
         })
         .catch(err=>console.log(err)) 
         setModifyClick(false)
@@ -52,7 +52,7 @@ export default function Note({content, id}) {
         <div className="border flex-1 border-gray-400 p-1  relative">
             <div className="flex justify-between text-sm p-1 ">
                 <div>
-                    <span>날짜</span>
+                    <span>{date}</span>
                 </div>
                 
                 <div className="">
@@ -64,7 +64,7 @@ export default function Note({content, id}) {
             <div className="h-24 absolute left-0 right-0">
                 {modifyClick ?
                 <form onSubmit={handleSubmit(onValid)} className="">
-                    <input  placeholder = {cont} className="font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
+                    <input  placeholder = {content} className="font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
                 </form>
                 :<span className="text-sm">{content} </span>}
                 

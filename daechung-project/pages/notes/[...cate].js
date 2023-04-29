@@ -86,7 +86,7 @@ export default function LCateDetail({cate}) {
             </div>
             <div>
             {cate.length === 3 ?<NoteCreate sCateId={id} /> :null}
-            {notes.map((n,i)=><div key = {i}><Note content={n.content} id ={n.id}/></div>) }
+            {notes.map((n,i)=><div key = {i}><Note content={n.content} id ={n.id} date = {n.createdAt.slice(0,10)}/></div>) }
             </div>
             
         </div>
