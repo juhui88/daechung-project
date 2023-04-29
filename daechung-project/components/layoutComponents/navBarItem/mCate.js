@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRecoilState } from "recoil"
 import tw from "tailwind-styled-components"
-import { mCateFoldState } from "../../atom"
+import { changeState, deleteState, mCateFoldState } from "../../atom"
 import { FoldBtn, PlusBtn } from "../navBar"
 import SmallCategory from "./sCate"
 
@@ -17,6 +17,19 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
     const [clicked, setClicked] = useState(false)
     const [isPost, setIsPost] = useState(false)
     
+    const [isDelete, setIsDelete] = useRecoilState(deleteState);
+    const [change, setChange] = useRecoilState(changeState)
+
+    const onClickDelte = () => {
+        axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/medium-cates/medium-cate-id/${mCateId}`)
+        .then(res=>{
+            console.log(res)
+            setChange(prev=>!prev)
+        })
+        .catch(err=>console.log(err))
+        setIsDelete(false)
+    }
+
     const onClickPlus = () => {
         setClicked(true)
         setMCateFold(true)
@@ -36,26 +49,20 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         },`/notes/${lCateName}/${mCateName}`)
     }
 
-    const onClickScate = (sCateName,sCateId) => {
-        router.push({
-            pathname:`/notes/${lCateName}/${mCateName}/${sCateName}`,
-            query:{
-                sCateId : sCateId
-            }
-        },`/notes/${lCateName}/${mCateName}/${sCateName}`)
-    } 
-
 
    
     const onValid = (data) => {
         console.log(data)
         if (sCates)
-        axios.post(`https://${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`,
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`,
         {
             smallCateName: data.sName,
             startedAt : moment().format("YYYY-MM-DD"),
             endedAt: moment().format("YYYY-MM-DD")
-        }).then(res=>console.log(res))
+        }).then(res=>{
+            console.log(res)
+            setChange(prev => !prev)
+        })
         .catch(err=>console.log(err))
 
         setClicked(false)
@@ -64,7 +71,7 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
     }
 
     useEffect(()=>{
-        axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/small-cates/medium-cate-id/${mCateId}`)
         .then(response=>{
             if (response.data.smallCates.length !== 0 ){
                 setSCates(response.data.smallCates)
@@ -74,16 +81,23 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         .catch(error=>console.log(error))
         console.log(mCateFold)
         console.log("sCates",sCates)
-    },[clicked, isPost,mCateFold])
+    },[clicked, isPost,mCateFold,isDelete, change, setChange])
 
     
 
     return (<div>
     <div className="text-gray-600  grid  gap-2  font-medium pl-1 group w-64 my-2">
         <div className="flex justify-between">
+            {isDelete ? 
+            <div onClick={onClickDelte}>
+            <PlusBtn>🗑</PlusBtn>
+            </div>
+            :
             <div onClick={onClickPlus}>
                 <PlusBtn>+</PlusBtn>
             </div>
+            }
+            
             <div className="flex-1 cursor-pointer"onClick={onClickMcate} >
                 <span className="pl-1">{mCateName}</span>
             </div>
@@ -101,8 +115,8 @@ export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFol
         </div>
         <div>
             {mCateFold ?sCates.map((small, i) =>  
-            <div key = {i} onClick = {()=>onClickScate(small.name, small.id)}>
-                {<SmallCategory name = {small.name} />}
+            <div className="" key = {i} >
+                {<SmallCategory name = {small.name} id = {small.id} lCateName = {lCateName} mCateName = {mCateName}/>}
             </div>) :null}
             {clicked ? 
                 <form onSubmit={handleSubmit(onValid)} className="ml-8">

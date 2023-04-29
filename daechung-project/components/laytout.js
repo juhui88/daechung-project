@@ -17,7 +17,7 @@ export default function Layout({children}) {
     useEffect(()=> {
         axios({
             method:"get",
-            url:`https://${process.env.NEXT_PUBLIC_API_URL}/users/me`,
+            url:`${process.env.NEXT_PUBLIC_API_URL}/users/me`,
         }).then(res=>{
             setUserImg(res.data.user.profileImgUrl)
         })

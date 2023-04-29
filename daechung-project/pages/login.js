@@ -9,7 +9,7 @@ export default function Login() {
             <div className="mb-2">
                 <span className="text-textPoint font-extrabold ">로그인</span>
             </div>
-            <Link href = {`https://${process.env.NEXT_PUBLIC_API_URL}/auth/kakao/callback`}  className="flex border-2 border-gray-300 p-2 cursor-pointer mb-2">
+            <Link href = {`${process.env.NEXT_PUBLIC_API_URL}/auth/kakao/callback`}  className="flex border-2 border-gray-300 p-2 cursor-pointer mb-2">
                 <img className="h-6" src="kakaoLogo.png"/>
                 <span className="mx-auto text-gray-600">카카오톡 계정으로 시작하기</span>
             </Link>

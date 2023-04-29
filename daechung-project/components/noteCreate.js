@@ -1,14 +1,18 @@
 import axios from "axios";
 import { useState } from "react"
 import { useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import { changeState } from "./atom";
 
 
-export default function NoteCreate({sCateId, isPosting}) {
+export default function NoteCreate({sCateId}) {
     const [ img, setImg ] = useState([])
     const [ previewImg, setPreviewImg ] = useState([])
     const [imgNum, setImgNum] = useState(0);
     const {register,reset, handleSubmit} = useForm()
     const [files, setFiles] = useState()
+
+    const [change, setChange] = useRecoilState(changeState)
     
     axios.interceptors.request.eject()
     const insertImg = (e) => {
@@ -49,16 +53,21 @@ export default function NoteCreate({sCateId, isPosting}) {
         
          axios({
             method:"post",
-            url:`https://${process.env.NEXT_PUBLIC_API_URL}/notes/small-cate-id/${sCateId}`,
+            url:`${process.env.NEXT_PUBLIC_API_URL}/notes/small-cate-id/${sCateId}`,
             headers:{
                 'Content-Type': 'multipart/form-data',
             },
             data:formData
-        }).then(res=>console.log("notecreate",res))
+        }).then(res=>{
+            console.log("notecreate",res)
+            setChange(prev=> !prev)
+        })
         .catch(err=>console.log(err)) 
         reset() 
         setPreviewImg([])
-        isPosting()
+        
+        console.log("체인지",change)
+        
     }
     return <div className="flex h-32">
         <form className="w-full" onSubmit={handleSubmit(onValid)} >

@@ -19,3 +19,13 @@ export const sequenceState = atom({
   key: "sequenceState",
   default: "wrt"
 })
+
+export const deleteState = atom({
+  key:"deleteState",
+  default: false
+})
+
+export const changeState = atom({
+  key:"changeState",
+  default:false
+})

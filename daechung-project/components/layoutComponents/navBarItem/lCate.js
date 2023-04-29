@@ -5,6 +5,8 @@ import MediumCategory from "./mCate";
 import {cls} from "../../../libs/utils"
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { changeState } from "@/components/atom";
+import { useRecoilState } from "recoil";
 
 export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     const router = useRouter()
@@ -14,6 +16,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     const [mCatesFold, setMCatesFold] = useState([])
     const [clicked, setClicked] = useState(false)
     const [isPost, setIsPost] = useState(false);
+    const [change, setChange]= useRecoilState(changeState)
 
     const inputRef = useRef();
 
@@ -40,10 +43,13 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
         console.log(data)
         
 
-        axios.post(`https://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`,
         {
             mediumCateName: data.mName
-        }).then(res=>console.log(res))
+        }).then(res=>{
+            console.log(res)
+            setChange(prev=>!prev)
+        })
         .catch(err=>console.log(err))
 
         reset();
@@ -56,7 +62,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     
     
     useEffect(()=>{
-        axios.get(`https://${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/medium-cates/large-cate-id/${lCateId}`)
         .then(response=>{
             if(response.data.mediumCates) {
                 setMCates(response.data.mediumCates)
@@ -69,7 +75,7 @@ export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
         })
         .catch(error=>console.log(error))
         console.log(isPost)
-    },[clicked, isPost, lCateFold])
+    },[clicked, isPost, lCateFold, change, setChange])
 
     useEffect(()=> {
         if(inputRef.current && clicked ){

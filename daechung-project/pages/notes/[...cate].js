@@ -1,4 +1,4 @@
-import { sequenceState } from "@/components/atom";
+import { changeState, sequenceState } from "@/components/atom";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -26,22 +26,20 @@ export default function LCateDetail({cate}) {
     const [isInitialMount, setIsInitialMount] = useState(true);
     const [id, setId] = useState()
     const length = cate.length
-    const [isPost, setIsPost] = useState(false)
 
     const [sequence, setSequence] = useRecoilState(sequenceState)
 
+    const [change, setChange] = useRecoilState(changeState);
 
-    const isPosting = ()=> {
-        setIsPost(prev=>!prev)
-    }
+
     useEffect(() => {
         let url = '';
         if (length === 1) {
-            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/large-cate-id/${router.query.lCateId}`;
+            url = `${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/large-cate-id/${router.query.lCateId}`;
         } else if (length === 2) {
-            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/medium-cate-id/${router.query.mCateId}`;
+            url = `${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/medium-cate-id/${router.query.mCateId}`;
         } else {
-            url = `https://${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/small-cate-id/${router.query.sCateId}`;
+            url = `${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/small-cate-id/${router.query.sCateId}`;
             setId(router.query.sCateId)
         }
         setUrl(url);
@@ -51,17 +49,21 @@ export default function LCateDetail({cate}) {
         if (isInitialMount){
             setIsInitialMount(false)
         } else {
-            axios({
-                method:"get",
-                url:url,
-            }).then(res=>{
-                setNotes(res.data.notes)
-                console.log(res.data.notes)
-            })
-            .catch(err=>console.log(err))
+            const axiosData = async() => {
+                await axios({
+                    method:"get",
+                    url:url,
+                }).then(res=>{
+                    setNotes(res.data.notes)
+                    console.log(res.data.notes)
+                })
+                .catch(err=>console.log(err))
+            }
+            
+            axiosData()
         }
         
-    },[url, isInitialMount,axios,isPost, sequence]) 
+    },[url, isInitialMount,axios, sequence, change,setChange]) 
     return <Layout>
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
@@ -83,8 +85,8 @@ export default function LCateDetail({cate}) {
                 
             </div>
             <div>
-            {cate.length === 3 ?<NoteCreate sCateId={id} isPosting={isPosting}/> :null}
-            {notes.map((n,i)=><div key = {i}><Note content={n.content}/></div>) }
+            {cate.length === 3 ?<NoteCreate sCateId={id} /> :null}
+            {notes.map((n,i)=><div key = {i}><Note content={n.content} id ={n.id} date = {n.createdAt.slice(0,10)}/></div>) }
             </div>
             
         </div>
