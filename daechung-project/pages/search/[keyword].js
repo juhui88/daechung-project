@@ -1,6 +1,6 @@
+import Layout from "@/components/laytout"
 import dynamic from "next/dynamic"
 
-const Layout = dynamic(import("@/components/laytout"))
 
 export default function SearchDetail({keyword}) {
   return <Layout>

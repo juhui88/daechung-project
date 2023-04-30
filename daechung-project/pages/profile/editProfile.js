@@ -1,8 +1,7 @@
-import dynamic from "next/dynamic";
+import ProfileBar from "@/components/profileBar";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const ProfileBar = dynamic(import("@/components/profileBar"))
 
 export default function Profile() {
     const [previewImg, setPreviewImg] = useState("/profileImgs/profile_1.png")

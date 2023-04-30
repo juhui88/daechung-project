@@ -3,11 +3,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { sequenceState } from "./atom";
-import dynamic from "next/dynamic";
-
-const CalendarBar = dynamic(import("./layoutComponents/calendar"))
-const NavBar = dynamic(import("./layoutComponents/navBar"))
-const Search = dynamic(import("./layoutComponents/search"))
+import CalendarBar from "./layoutComponents/calendar";
+import NavBar from "./layoutComponents/navBar";
+import Search from "./layoutComponents/search";
 
 export default function Layout({children}) {
     const [userImg, setUserImg] = useState()

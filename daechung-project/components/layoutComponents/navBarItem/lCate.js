@@ -1,15 +1,12 @@
 import { useRouter } from "next/router";
 import { use, useEffect, useRef, useState } from "react";
 import { FoldBtn, PlusBtn } from "../navBar";
+import MediumCategory from "./mCate";
 import {cls} from "../../../libs/utils"
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { changeState } from "@/components/atom";
 import { useRecoilState } from "recoil";
-import dynamic from "next/dynamic"
-
-const MediumCategory = dynamic(import("./mCate"))
-
 
 export default function LargeCategory({lCateName, lCateId, lCateIsFold}){
     const router = useRouter()

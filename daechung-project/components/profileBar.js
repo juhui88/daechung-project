@@ -1,9 +1,8 @@
 import axios from "axios";
+import CalendarBar from "./layoutComponents/calendar";
 import tw from "tailwind-styled-components"
 import { useRouter } from "next/router";
 import Link from "next/link";
-
-const CalendarBar = dynamic(import("./layoutComponents/calendar"))
 
 const Item = tw.div`
 bg-itemBg p-2 pl-2 w-64 flex justify-between group hover:cursor-pointer font-semibold text-textPoint

@@ -1,8 +1,7 @@
+import ProfileBar from "@/components/profileBar";
 import axios from "axios";
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const ProfileBar = dynamic(import("@/components/profileBar"))
 
 export default function AboutMe(){
     const [userImg, setUserImg] = useState();

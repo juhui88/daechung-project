@@ -7,9 +7,7 @@ import { useRecoilState } from "recoil"
 import tw from "tailwind-styled-components"
 import { changeState, deleteState, mCateFoldState } from "../../atom"
 import { FoldBtn, PlusBtn } from "../navBar"
-import dynamic from "next/dynamic"
-
-const SmallCategory = dynamic(import("./sCate"))
+import SmallCategory from "./sCate"
 
 export default function MediumCategory({mCateName, mCateId, lCateName,mCateIsFold}) {
     const router = useRouter();
