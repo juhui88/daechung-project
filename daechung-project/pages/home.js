@@ -39,7 +39,7 @@ export default function Home() {
       <Layout>
         <div className="pl-8 pr-28 "> 
           {notes.map((note,i)=><div key={i}>
-            <Note content={note.content} id = {note.id} date={note.createdAt.slice(0,10)}/>
+            <Note content={note.content} id = {note.id} date={note.createdAt?.slice(0,10)}/>
             </div>)}
         </div>
         

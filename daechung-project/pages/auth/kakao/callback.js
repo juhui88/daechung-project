@@ -36,7 +36,7 @@ export default function GetToken() {
             .catch(err=>console.log(err))
         }
         getToken() 
-    }, [code])
+    }, [])
     return (<div className="flex w-screen h-screen justify-center items-center">
         <span>로그인 중입니다. . .</span>
     </div>)
