@@ -1,4 +1,6 @@
-import Layout from "../../components/laytout";
+import Layout from "@/components/laytout"
+import dynamic from "next/dynamic"
+
 
 export default function SearchDetail({keyword}) {
   return <Layout>
@@ -6,10 +8,13 @@ export default function SearchDetail({keyword}) {
       <span className="font-extrabold">
         {keyword}
       </span>
-      <span>
-        에 대한 검색결과
-      </span>
-      </div>
+        <span>
+          에 대한 검색결과
+        </span>
+        <div className="py-3">
+          구현 준비 중...
+        </div>
+    </div>
         
     </Layout>
 }
