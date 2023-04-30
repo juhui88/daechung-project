@@ -3,9 +3,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import Layout from "../../components/laytout"
-import Note from "../../components/note"
-import NoteCreate from "../../components/noteCreate"
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(import("@/components/laytout"))
+const Note = dynamic(import("@/components/note"))
+const NoteCreate = dynamic(import("@/components/noteCreate"))
+
 
 axios.interceptors.request.use(
   function (config) {

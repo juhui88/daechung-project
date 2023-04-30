@@ -1,11 +1,13 @@
 import axios from "axios"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import tw from "tailwind-styled-components"
-import LargeCategory from "./navBarItem/lCate"
-import MediumCategory from "./navBarItem/mCate"
-import ModifyButton from "./navBarItem/modifyBtn"
+
+const LargeCategory = dynamic(import("./navBarItem/lCate"))
+const MediumCategory = dynamic(import("./navBarItem/mCate"))
+const ModifyButton = dynamic(import("./navBarItem/modifyBtn"))
 
 export const PlusBtn = tw.button`
     opacity-0

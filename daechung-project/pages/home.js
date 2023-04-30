@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Layout from "@/components/laytout";
-import Note from "@/components/note";
 import { useRecoilState } from "recoil";
 import { sequenceState } from "@/components/atom";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(import("@/components/laytout"))
+const Note = dynamic(import("@/components/note"))
 
 axios.interceptors.request.use(
   function (config) {
