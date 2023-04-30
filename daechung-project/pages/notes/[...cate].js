@@ -49,8 +49,8 @@ export default function LCateDetail({cate}) {
         if (isInitialMount){
             setIsInitialMount(false)
         } else {
-            const axiosData = async() => {
-                await axios({
+            const axiosData = () => {
+                 axios({
                     method:"get",
                     url:url,
                 }).then(res=>{
