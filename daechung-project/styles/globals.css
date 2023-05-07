@@ -4,4 +4,19 @@
 
 body {
     font-family: 'Nanum Gothic', sans-serif;
+    white-space: pre-line
+}
+
+div::-webkit-scrollbar {
+    width: 8px;
+    /* 스크롤바의 너비 */
+}
+
+div::-webkit-scrollbar-thumb {
+    height: 10%;
+    /* 스크롤바의 길이 */
+    background: rgb(156,163,175);
+    /* 스크롤바의 색상 */
+
+    border-radius: 10px;
 }

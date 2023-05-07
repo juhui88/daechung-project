@@ -21,7 +21,6 @@ export default function Login() {
                 <img src="메인대충이.png" className="w-20 mb-2"/>
             </div>
             <div className="bg-bgPoint h-36 p-3">
-                <p className="">회사소개</p>
                 <p className="mt-6">Instagram: @dae_gang_co</p>
             </div>
         </div>

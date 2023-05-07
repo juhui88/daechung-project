@@ -61,10 +61,10 @@ export default function Note({content, id, date}) {
                 </div>
             </div>
 
-            <div className="h-24 absolute left-0 right-0">
+            <div className="h-24 absolute left-0 right-0  overflow-x-hidden pl-2">
                 {modifyClick ?
                 <form onSubmit={handleSubmit(onValid)} className="">
-                    <input  placeholder = {content} className="font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
+                    <textarea  placeholder = {content} className="font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
                 </form>
                 :<span className="text-sm">{content} </span>}
                 
