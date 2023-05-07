@@ -8,6 +8,7 @@ export default function Note({content, id, date}) {
     const {register, reset, handleSubmit } = useForm()
     const [modifyClick, setModifyClick] = useState(false);
     const [change, setChange] = useRecoilState(changeState);
+    const btnRef = useRef()
 
     const onClickModify = () => {
         setModifyClick(prev => !prev)
@@ -44,6 +45,26 @@ export default function Note({content, id, date}) {
         setModifyClick(false)
 
     }
+    const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+        if (!e.shiftKey &&e.key === "Enter"){
+                e.preventDefault();
+                btnRef.current.click()
+        }else if(e.shiftKey &&e.key === "Enter"){
+            e.preventDefault();
+            console.log("하ㅓ일ㄴ")
+            const textarea = e.target;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            textarea.value = value.substring(0, start) + "\n" + value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + 1;
+        
+        }
+    }
 
     return<div className="flex h-32 space-x-2 mt-3 ">
         <div className="flex items-center justify-center w-40  ">
@@ -61,10 +82,11 @@ export default function Note({content, id, date}) {
                 </div>
             </div>
 
-            <div className="h-24 absolute left-0 right-0  overflow-x-hidden pl-2">
+            <div className="h-24 flex-1 absolute left-0 right-0  overflow-x-hidden pl-2">
                 {modifyClick ?
                 <form onSubmit={handleSubmit(onValid)} className="">
-                    <textarea  placeholder = {content} className="font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
+                    <textarea onKeyDown={handleKeyDown} placeholder={content} className="h-[89px] font-bold  w-full focus:outline-none whitespace-pre-wrap" {...register("content")}/>
+                    <button className="hidden" ref = {btnRef}/>
                 </form>
                 :<span className="text-sm">{content} </span>}
                 

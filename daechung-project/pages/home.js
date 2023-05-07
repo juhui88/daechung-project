@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Layout from "@/components/laytout";
 import Note from "@/components/note";
 import { useRecoilState } from "recoil";
-import { sequenceState } from "@/components/atom";
+import { changeState, sequenceState } from "@/components/atom";
 
 axios.interceptors.request.use(
   function (config) {
@@ -21,6 +21,7 @@ axios.interceptors.request.use(
 export default function Home() {
   const [notes, setNotes] = useState([])
   const [sequence, setSequence] = useRecoilState(sequenceState);
+  const [change, setChange] = useRecoilState(changeState)
 
   useEffect(()=>{
      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notes/${sequence}/main`)
@@ -32,7 +33,7 @@ export default function Home() {
           console.log(response.data)
         })
         .catch(error=>console.log(error))
-  },[useState])
+  },[useState,change, setChange])
 
 
     return (

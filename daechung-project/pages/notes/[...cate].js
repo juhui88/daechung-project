@@ -63,7 +63,7 @@ export default function LCateDetail({cate}) {
             axiosData()
         }
         
-    },[url, isInitialMount,axios, sequence, change,setChange]) 
+    },[url, isInitialMount,axios, sequence,setSequence, change,setChange]) 
     return <Layout>
         <div className=" pl-8 pr-28 ">
             <div className="mb-3 flex items-center">
