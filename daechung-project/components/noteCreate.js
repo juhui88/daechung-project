@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { changeState } from "./atom";
@@ -11,6 +11,7 @@ export default function NoteCreate({sCateId}) {
     const [imgNum, setImgNum] = useState(0);
     const {register,reset, handleSubmit} = useForm()
     const [files, setFiles] = useState()
+    const btnRef = useRef()
 
     const [change, setChange] = useRecoilState(changeState)
     
@@ -69,8 +70,25 @@ export default function NoteCreate({sCateId}) {
         console.log("체인지",change)
         
     }
+
+    const handleKeyDown = (e) => {
+        if (!e.shiftKey &&e.key === "Enter"){
+                e.preventDefault();
+                btnRef.current.click()
+        }else if(e.shiftKey &&e.key === "Enter"){
+            e.preventDefault();
+            console.log("하ㅓ일ㄴ")
+            const textarea = e.target;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            textarea.value = value.substring(0, start) + "\n" + value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + 1;
+        
+        }
+    }
     return <div className="flex h-32">
-        <form className="w-full" onSubmit={handleSubmit(onValid)} >
+        <form className="w-full" onSubmit={handleSubmit(onValid)}>
             <div className="flex space-x-2 ">
                 <div className=" w-40 relative flex items-center justify-center ">
                     {previewImg.length !== 0 && imgNum !== 0 ? 
@@ -105,7 +123,8 @@ export default function NoteCreate({sCateId}) {
                 </div>
                 
                 <div className="flex-1 ">
-                    <input {...register("content")} type="text" className="border border-gray-400 text-sm h-32 p-1 w-full break-all normal-nums" rows={3} />        
+                    <textarea onKeyDown={handleKeyDown} {...register("content")} type="text" className="border border-gray-400 text-sm h-32 p-1 w-full break-all normal-nums" rows={3} />
+                    <button className="hidden" ref = {btnRef} >버튼</button>
                 </div>
                 
             </div>
