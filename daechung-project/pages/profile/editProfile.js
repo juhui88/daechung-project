@@ -1,11 +1,13 @@
 import ProfileBar from "@/components/profileBar";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 
 export default function Profile() {
     const [previewImg, setPreviewImg] = useState("/profileImgs/profile_1.png")
     const {register, handleSubmit, formState:{errors}} = useForm();
+    const [userImg, setUserImg] = useState()
     const insertImg = (e) => {
         const fileArr = e.target.files;
 
@@ -31,12 +33,23 @@ export default function Profile() {
         console.log(data)
     }
 
+    useEffect(()=> {
+        axios({
+            method:"get",
+            url:`${process.env.NEXT_PUBLIC_API_URL}/users/me`,
+        }).then(res=>{
+            setUserImg(res.data.user.profileImgUrl)
+        })
+        .catch(err=>console.log(err))
+    },[])
+
+
     return (
     <div>
         <ProfileBar>
             <div className="flex space-x-10">
                 <div className="space-y-3">
-                    <img src={previewImg} className="w-32 h-32 border-2 rounded-full bg-contain "/> 
+                    <img src={`/profileImgs/${userImg}.png`} className="w-32 h-32 border-2 rounded-full bg-contain "/> 
                     <label className="cursor-pointer w-32 flex justify-center">
                         <span className="border-2 p-1 rounded-lg text-sm">프로필편집</span>
                         <input type="file" className="hidden" onChange={(e)=>insertImg(e)} />

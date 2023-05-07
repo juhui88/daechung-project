@@ -33,7 +33,7 @@ export default function NoteCreate({sCateId}) {
             };
             reader.readAsDataURL(file);
         }
-        
+        alert("파일 업로드 기능 구현 준비 중")
     }
 
     const onClickNumUp = () => {
